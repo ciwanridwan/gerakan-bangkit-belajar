@@ -30,59 +30,63 @@
             <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
                 <div class="row w-100">
                     <div class="col-lg-4 mx-auto">
+                        @if (Session::has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{Session::get('success')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {{Session::put('success', null)}}
+                        @endif
                         <h2 class="text-center mb-4">Register</h2>
                         <div class="auto-form-wrapper">
-                            <form action="{{route ('register')}}" method="POST">
+                            <form action="{{route ('store-register')}}" method="POST">
                                 @csrf
+                                @method('POST')
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input id="name" type="text"
-                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                            placeholder="Username" required autocomplete="name" autofocus>
+                                        <input id="nama" type="text" class="form-control" name="nama" placeholder="Nama"
+                                            required autocomplete="nama" autofocus>
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="mdi mdi-check-circle-outline"></i>
                                             </span>
                                         </div>
-                                        @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        @if ($errors->has('nama'))
+                                        <div id="nama-error" class="error text-danger pl-3" for="nama"
+                                            style="display: block;">
+                                            <p style="color: red">{{ $errors->first('nama') }}</p>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input id="email" type="email"
-                                            class="form-control @error('email') is-invalid @enderror" name="email"
+                                        <input id="email" type="email" class="form-control" name="email"
                                             placeholder="Email" required autocomplete="email" autofocus>
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="mdi mdi-check-circle-outline"></i>
                                             </span>
                                         </div>
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        @if ($errors->has('email'))
+                                            <p style="color: red">{{ $errors->first('email') }}</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input id="password" type="password"
-                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                        <input id="password" type="password" class="form-control" name="password"
                                             required autocomplete="new-password" placeholder="Password">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="mdi mdi-check-circle-outline"></i>
                                             </span>
                                         </div>
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        @if ($errors->has('password'))
+                                            <p style="color: red">{{ $errors->first('password') }}</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -109,7 +113,7 @@
                                 </div>
                                 <div class="text-block text-center my-3">
                                     <span class="text-small font-weight-semibold">Already have and account ?</span>
-                                    <a href="{{ route('login')}}" class="text-black text-small">Login</a>
+                                    <a href="{{ route('login-admin')}}" class="text-black text-small">Login</a>
                                 </div>
                             </form>
                         </div>

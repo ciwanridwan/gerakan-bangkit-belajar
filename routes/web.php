@@ -18,29 +18,61 @@ Route::get('/', function () {
     return view('index');
 });
 
+// API KOTA DAN KECAMATAN
 Route::get('/api/city/', 'RelawanController@getCity');
 Route::get('/api/district/', 'RelawanController@getDistrict');
 
+
 // ADMIN 
-Route::group(['prefix' => 'admin'], function () {
-    Route::group(['prefix' => 'relawan'], function () {
-        Route::get('create', 'Admin\DataRelawanController@create')->name('create-data-relawan');
-        Route::get('index', 'Admin\DataRelawanController@index')->name('index-data-relawan');
-        Route::group(['prefix' => 'account'], function () {
-            Route::get('/index', 'Admin\DataRelawanController@indexAccount')->name('index-account-relawan');
-            Route::get('/create', 'Admin\DataRelawanController@createAccount')->name('create-account-relawan');
-            Route::get('/edit/{id}', 'Admin\DataRelawanController@editAccount')->name('edit-account-relawan');
+Route::group(['prefix' => 'gbb'], function () {
+    Route::post('store-login', 'Admin\LoginController@store')->name('store-login');
+    Route::get('login', 'Admin\LoginController@create')->name('login-admin');
+    Route::get('register', 'Admin\RegisterController@create')->name('register-admin');
+    Route::post('store-register', 'Admin\RegisterController@store')->name('store-register');
+
+    Route::group(['middleware' => 'admin'], function () {
+        Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
+        Route::get('logout', 'Admin\LoginController@logout')->name('logout-admin');
+
+        // SANGGAR
+        Route::group(['prefix' => 'sanggar'], function (){
+            Route::get('create', 'Admin\SanggarController@create')->name('create-sanggar');
+            Route::get('index', 'Admin\SanggarController@index')->name('index-sanggar');
         });
 
+        // ANGGOTA DEWAN
+        Route::group(['prefix' => 'anggota-dewan'], function (){
+            Route::get('create', 'Admin\AnggotaDewanController@create')->name('create-anggota-dewan');
+            Route::get('index', 'Admin\AnggotaDewanController@index')->name('index-dewan');
+        });
+        // RELAWAN
+        Route::group(['prefix' => 'relawan'], function () {
+            Route::get('create', 'Admin\DataRelawanController@create')->name('create-data-relawan');
+            Route::get('index', 'Admin\DataRelawanController@index')->name('index-data-relawan');
+            Route::get('edit/{id}', 'Admin\DataRelawanController@edit')->name('edit-relawan');
+            Route::post('store', 'Admin\DataRelawanController@store')->name('store-data-relawan');
+            Route::post('update/{id}', 'Admin\DataRelawanController@update')->name('update-relawan');
+            Route::post('delete/{id}', 'Admin\DataRelawanController@destroy')->name('delete-relawan');
 
-        // Jenjang 
-        Route::group(['prefix' => 'jenjang'], function () {
-            Route::get('/index', 'Admin\DataRelawanController@indexJenjang')->name('index-jenjang-relawan');
-            Route::get('/create', 'Admin\DataRelawanController@createJenjang')->name('create-jenjang-relawan');
-            Route::get('/edit/{id}', 'Admin\DataRelawanController@editJenjang')->name('edit-jenjang-relawan');
-            Route::post('/update/{id}', 'Admin\DataRelawanController@updateJenjang')->name('update-jenjang-relawan');
-            Route::post('/delete/{id}', 'Admin\DataRelawanController@deleteJenjang')->name('delete-jenjang-relawan');
-            Route::post('/store', 'Admin\DataRelawanController@storeJenjang')->name('store-jenjang-relawan');
+            // AKUN USER
+            Route::group(['prefix' => 'account'], function () {
+                Route::get('/index', 'Admin\DataRelawanController@indexAccount')->name('index-account-relawan');
+                Route::get('/create', 'Admin\DataRelawanController@createAccount')->name('create-account-relawan');
+                Route::post('/store', 'Admin\DataRelawanController@storeAccount')->name('store-account-relawan');
+                Route::get('/edit/{id}', 'Admin\DataRelawanController@editAccount')->name('edit-account-relawan');
+                Route::post('/update/{id}', 'Admin\DataRelawanController@updateAccount')->name('update-account-relawan');
+                Route::post('/delete/{id}', 'Admin\DataRelawanController@deleteAccount')->name('delete-account-relawan');
+            });
+
+            // Jenjang 
+            Route::group(['prefix' => 'jenjang'], function () {
+                Route::get('/index', 'Admin\DataRelawanController@indexJenjang')->name('index-jenjang-relawan');
+                Route::get('/create', 'Admin\DataRelawanController@createJenjang')->name('create-jenjang-relawan');
+                Route::get('/edit/{id}', 'Admin\DataRelawanController@editJenjang')->name('edit-jenjang-relawan');
+                Route::post('/update/{id}', 'Admin\DataRelawanController@updateJenjang')->name('update-jenjang-relawan');
+                Route::post('/delete/{id}', 'Admin\DataRelawanController@deleteJenjang')->name('delete-jenjang-relawan');
+                Route::post('/store', 'Admin\DataRelawanController@storeJenjang')->name('store-jenjang-relawan');
+            });
         });
     });
 });
