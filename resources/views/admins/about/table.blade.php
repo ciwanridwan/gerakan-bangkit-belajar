@@ -20,17 +20,15 @@ Berita
                     {{Session::put('message', null)}}
                     @endif
                     <h4 class="card-title">Berita</h4>
-                    <a href="{{route('create-berita')}}" class="btn btn-success mr-2">Tambah</a>
+                    <a href="{{route('create-about')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Seo Judul</th>
-                                <th>Penulis</th>
+                                <th>Isi</th>
                                 <th>Gambar</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -38,22 +36,12 @@ Berita
                             @php
                             $nomor = 1;
                             @endphp
-                            @forelse ($berita as $item)
+                            @forelse ($about as $item)
                             <tr>
                                 <td>{{$nomor}}</td>
                                 <td>{{$item->judul}}</td>
-                                <td>{{$item->seo_judul}}</td>
-                                <td>{{$item->penulis}}</td>
+                                <td>{{$item->isi}}</td>
                                 <td>{{$item->gambar}}</td>
-                                @if ($item->status == 0)
-                                <td> <form action="{{route('confirm-berita', $item->id)}}" method="POST">
-                                    @csrf
-                                    @method('POST')
-                                    <button class="btn btn-primary" type="submit">Confirm</button>
-                                </form>
-                                @elseif ($item->status == 1)
-                                <td><label class="badge badge-success">Completed</label></td>
-                                @endif
                                 <td><a href="#" class="btn btn-info">Edit</a></td>
                                 <td>
                                     <form action="#" method="POST">
@@ -76,7 +64,7 @@ Berita
                                 </td> --}}
                         </tbody>
                     </table>
-                    {{$berita->links()}}
+                    {{-- {{$about->links()}} --}}
                 </div>
             </div>
         </div>

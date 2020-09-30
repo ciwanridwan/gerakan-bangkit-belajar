@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-Berita
+About
 @endsection
 
 @section('content')
@@ -18,9 +18,9 @@ Berita
                     </div>
                     {{Session::put('message', null)}}
                     @endif
-                    <h4 class="card-title">Input Berita</h4>
+                    <h4 class="card-title">Input About</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('store-berita')}}" method="POST" enctype="multipart/form-data">
+                    <form class="forms-sample" action="{{route('store-about')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group">
@@ -31,22 +31,8 @@ Berita
                         </div>
 
                         <div class="form-group">
-                            <label for="seo_judul">Seo Judul</label>
-                            <input type="text" class="form-control" id="seo_judul" placeholder="Seo Judul"
-                                name="seo_judul" required>
-                            <p class="text-danger">{{ $errors->first('seo_judul') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gambar">Gambar</label>
-                            <input type="file" class="form-control form-control-lg" id="gambar" placeholder="Gambar"
-                                name="gambar" required>
-                            <p class="text-danger">{{ $errors->first('gambar') }}</p>
-                        </div>
-
-                        <div class="form-group">
                             <label for="isi">Isi</label>
-                            <textarea class="form-control" id="isi" name="isi" id="" cols="10" rows="3"></textarea>
+                            <textarea class="form-control" id="isi" name="isi" id="" cols="5" rows="3"></textarea>
                             <p class="text-danger">{{ $errors->first('isi') }}</p>
                         </div>
 
@@ -57,10 +43,10 @@ Berita
                         </div>
 
                         <div class="form-group">
-                            <label for="penulis">Penulis</label>
-                            <input type="text" class="form-control" id="penulis" placeholder="penulis" name="penulis"
-                                required>
-                            <p class="text-danger">{{ $errors->first('penulis') }}</p>
+                            <label for="gambar">Gambar</label>
+                            <input type="file" class="form-control form-control-lg" id="gambar" placeholder="Gambar"
+                                name="gambar" required>
+                            <p class="text-danger">{{ $errors->first('gambar') }}</p>
                         </div>
 
                         <input type="hidden" name="user_id" value="">

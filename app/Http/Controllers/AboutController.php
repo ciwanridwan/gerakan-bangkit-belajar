@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\About;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AboutController extends Controller
 {
@@ -11,9 +13,16 @@ class AboutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function table()
     {
-        //
+        $about = About::all();
+        return view('admins.about.table')->with('about', $about);
+    }
+
+    public function index()
+    {   
+        $about = About::all();
+        return view('index')->with('about', $about);
     }
 
     /**
@@ -23,7 +32,7 @@ class AboutController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.about.create');
     }
 
     /**
@@ -34,7 +43,32 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+        [
+            'judul' => 'required',
+            'isi' => 'required|max:255',
+            'gambar' => 'required|image|mimes:png,jpeg,jpg',
+            'deskripsi' => 'required',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        $about = new About();
+        $about->judul = $request->input('judul');
+        $about->isi = $request->input('isi');
+        $about->deskripsi = $request->input('deskripsi');
+        $about->gambar = $fileNameToStore;
+        $about->save();
+        
+        Session::put('message', 'Data Berhasil Ditambah');
+        return redirect()->back();
     }
 
     /**

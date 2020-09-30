@@ -21,7 +21,7 @@
         <div class="member">
           <div class="pic"><img src="{{ asset('assets/img/team/Muhaimin-Iskandar.jpg')}}" alt="" width="250px" height="250px"></div>
           <h4>Abdul Muhaimin Iskandar</h4>
-          <span>Inisiator Gerakan Bangkit Belajar</span>
+          <span>Inisiator <br> Gerakan Bangkit Belajar</span>
           <div class="social">
             <a href=""><i class="fa fa-twitter"></i></a>
             <a href=""><i class="fa fa-facebook"></i></a>
@@ -35,7 +35,7 @@
         <div class="member">
           <div class="pic"><img src="{{ asset('assets/img/team/syaifulhuda-2.jpg')}}" alt="" width="250px" height="250"></div>
           <h4>Syaiful Huda</h4>
-          <span>Koordinator Nasional Gerakan Bangkit Belajar</span>
+          <span>Koordinator <br> Nasional Gerakan Bangkit Belajar</span>
           <div class="social">
             <a href=""><i class="fa fa-twitter"></i></a>
             <a href=""><i class="fa fa-facebook"></i></a>

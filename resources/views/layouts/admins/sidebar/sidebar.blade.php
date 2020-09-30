@@ -76,5 +76,12 @@
         <span class="menu-title">Berita</span>
       </a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('table-about')}}">
+        <i class="menu-icon typcn typcn-document-text"></i>
+        <span class="menu-title">Tentang GBB</span>
+      </a>
+    </li>
   </ul>
 </nav>

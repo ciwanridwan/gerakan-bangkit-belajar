@@ -53,7 +53,8 @@ class BeritaController extends Controller
             'isi' => 'required',
             'penulis' => 'required',
             'gambar' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'deskripsi' => 'required'
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -72,8 +73,10 @@ class BeritaController extends Controller
         $berita->penulis = $request->input('penulis');
         $berita->gambar = $fileNameToStore;
         $berita->user_id = $request->input('user_id');
+        $berita->deskripsi = $request->input('deskripsi');
         $berita->status = 0;
         $berita->save();
+        
         Session::put('message', 'Data Berhasil Ditambah');
         return redirect()->back();
     }

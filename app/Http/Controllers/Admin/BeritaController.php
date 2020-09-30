@@ -63,29 +63,33 @@ class BeritaController extends Controller
                 'isi' => 'required',
                 'penulis' => 'required',
                 'gambar' => 'required|image|mimes:png,jpeg,jpg',
-                'user_id' => 'nullable'
+                'user_id' => 'nullable',
+                'deskripsi' => 'required',
             ]
         );
 
         if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
-            $filename = time() . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/products', $filename);
-
-            $berita = Berita::create(
-                [
-                    'judul' => $request->judul,
-                    'seo_judul' => $request->seo_judul,
-                    'isi' => $request->isi,
-                    'penulis' => $request->penulis,
-                    'gambar' => $filename,
-                    'user_id' => $request->user_id,
-                    'status' => 0
-                ]
-            );
-            Session::put('message', 'Data Berhasil Ditambah');
-            return redirect()->back();
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
         }
+        $berita = new Berita();
+        $berita->judul = $request->input('judul');
+        $berita->seo_judul = $request->input('seo_judul');
+        $berita->isi = $request->input('isi');
+        $berita->penulis = $request->input('penulis');
+        $berita->gambar = $fileNameToStore;
+        $berita->user_id = $request->input('user_id');
+        $berita->deskripsi = $request->input('deskripsi');
+        $berita->status = 0;
+        $berita->save();
+        
+        Session::put('message', 'Data Berhasil Ditambah');
+        return redirect()->back();
     }
 
         // if ($request->hasFile('gambar')) {

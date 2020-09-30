@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
+// Route::get('/', function () {
+//     return view('index');
+// });
+Route::get('/', 'LandingPageController@about')->name('index');
 // Berita
 Route::get('/berita', 'BeritaController@index')->name('berita');
-
+Route::get('/about', 'AboutController@index')->name('about');
 
 // API KOTA DAN KECAMATAN
 Route::get('/api/city/', 'RelawanController@getCity');
@@ -38,21 +38,28 @@ Route::group(['prefix' => 'gbb'], function () {
         Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
         Route::get('logout', 'Admin\LoginController@logout')->name('logout-admin');
 
+        // About
+        Route::group(['prefix' => 'about'], function () {
+            Route::get('/create', 'AboutController@create')->name('create-about');
+            Route::get('/table', 'AboutController@table')->name('table-about');
+            Route::post('/store', 'AboutController@store')->name('store-about');
+        });
+
         // BERITA
-        Route::group(['prefix' => 'berita'], function () { 
-        Route::get('table', 'Admin\BeritaController@table')->name('table-berita-admin');
-        Route::get('create', 'Admin\BeritaController@create')->name('create-berita-admin');
-        Route::post('store', 'Admin\BeritaController@store')->name('store-berita-admin');
-        Route::post('confirm/{id}', 'Admin\BeritaController@confirm')->name('confirm-berita');
-    });
+        Route::group(['prefix' => 'berita'], function () {
+            Route::get('table', 'Admin\BeritaController@table')->name('table-berita-admin');
+            Route::get('create', 'Admin\BeritaController@create')->name('create-berita-admin');
+            Route::post('store', 'Admin\BeritaController@store')->name('store-berita-admin');
+            Route::post('confirm/{id}', 'Admin\BeritaController@confirm')->name('confirm-berita');
+        });
         // SANGGAR
-        Route::group(['prefix' => 'sanggar'], function (){
+        Route::group(['prefix' => 'sanggar'], function () {
             Route::get('create', 'Admin\SanggarController@create')->name('create-sanggar');
             Route::get('index', 'Admin\SanggarController@index')->name('index-sanggar');
         });
 
         // ANGGOTA DEWAN
-        Route::group(['prefix' => 'anggota-dewan'], function (){
+        Route::group(['prefix' => 'anggota-dewan'], function () {
             Route::get('create', 'Admin\AnggotaDewanController@create')->name('create-anggota-dewan');
             Route::get('index', 'Admin\AnggotaDewanController@index')->name('index-dewan');
         });
