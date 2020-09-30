@@ -69,5 +69,12 @@
         </ul>
       </div>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('table-berita-admin')}}">
+        <i class="menu-icon typcn typcn-document-text"></i>
+        <span class="menu-title">Berita</span>
+      </a>
+    </li>
   </ul>
 </nav>

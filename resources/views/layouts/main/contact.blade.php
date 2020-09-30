@@ -5,8 +5,8 @@
 
       <div class="col-lg-4 col-md-4">
         <div class="contact-about">
-          <h3>Avilon</h3>
-          <p>Cras fermentum odio eu feugiat. Justo eget magna fermentum iaculis eu non diam phasellus. Scelerisque felis imperdiet proin fermentum leo. Amet volutpat consequat mauris nunc congue.</p>
+          <h3>GBB</h3>
+          <p>Gerakan Bangkit Belajar</p>
           <div class="social-links">
             <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -21,17 +21,17 @@
         <div class="info">
           <div>
             <i class="ion-ios-location-outline"></i>
-            <p>A108 Adam Street<br>New York, NY 535022</p>
+            <p>Kuningan, Jaksel<br>Jakarta, Indonesia</p>
           </div>
 
           <div>
             <i class="ion-ios-email-outline"></i>
-            <p>info@example.com</p>
+            <p>info@gbb.com</p>
           </div>
 
           <div>
             <i class="ion-ios-telephone-outline"></i>
-            <p>+1 5589 55488 55s</p>
+            <p>+62 81394321856</p>
           </div>
 
         </div>

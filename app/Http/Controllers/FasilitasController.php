@@ -112,7 +112,7 @@ class FasilitasController extends Controller
         $fasilitas->bukti_pjj = $fotoBuktiPjj;
         $fasilitas->link_youtube = $request->input('link_youtube');
         $fasilitas->save();
-        dd($fasilitas->bukti_berita);
+        // dd($fasilitas->bukti_berita);
 
         Session::put('message', 'Data Berhasil Diinput');
         return redirect()->back();

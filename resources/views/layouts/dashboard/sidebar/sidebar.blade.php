@@ -41,6 +41,13 @@
         </div>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('table-berita')}}">
+          <i class="menu-icon typcn typcn-document-text"></i>
+          <span class="menu-title">Berita</span>
+        </a>
+      </li>
+
       
       {{-- <li class="nav-item">
         <a class="nav-link" href="pages/forms/basic_elements.html">

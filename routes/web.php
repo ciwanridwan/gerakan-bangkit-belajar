@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+// Berita
+Route::get('/berita', 'BeritaController@index')->name('berita');
+
+
 // API KOTA DAN KECAMATAN
 Route::get('/api/city/', 'RelawanController@getCity');
 Route::get('/api/district/', 'RelawanController@getDistrict');
@@ -34,6 +38,13 @@ Route::group(['prefix' => 'gbb'], function () {
         Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
         Route::get('logout', 'Admin\LoginController@logout')->name('logout-admin');
 
+        // BERITA
+        Route::group(['prefix' => 'berita'], function () { 
+        Route::get('table', 'Admin\BeritaController@table')->name('table-berita-admin');
+        Route::get('create', 'Admin\BeritaController@create')->name('create-berita-admin');
+        Route::post('store', 'Admin\BeritaController@store')->name('store-berita-admin');
+        Route::post('confirm/{id}', 'Admin\BeritaController@confirm')->name('confirm-berita');
+    });
         // SANGGAR
         Route::group(['prefix' => 'sanggar'], function (){
             Route::get('create', 'Admin\SanggarController@create')->name('create-sanggar');
@@ -84,6 +95,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile/edit/{id}', 'ProfileUserController@edit')->name('profile-edit');
+Route::get('/berita/create', 'BeritaController@create')->name('create-berita');
+Route::post('/berita/store', 'BeritaController@store')->name('store-berita');
+Route::get('/berita/table', 'BeritaController@table')->name('table-berita');
 
 Route::group(['prefix' => 'relawan', 'middleware' => 'auth'], function () {
     Route::get('/create', 'RelawanController@create')->name('create-relawan');
