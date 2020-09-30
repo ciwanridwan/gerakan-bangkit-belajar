@@ -98,6 +98,7 @@ Route::get('/profile/edit/{id}', 'ProfileUserController@edit')->name('profile-ed
 Route::get('/berita/create', 'BeritaController@create')->name('create-berita');
 Route::post('/berita/store', 'BeritaController@store')->name('store-berita');
 Route::get('/berita/table', 'BeritaController@table')->name('table-berita');
+Route::get('/edit/{id}', 'BeritaController@edit')->name('edit-berita');
 
 Route::group(['prefix' => 'relawan', 'middleware' => 'auth'], function () {
     Route::get('/create', 'RelawanController@create')->name('create-relawan');

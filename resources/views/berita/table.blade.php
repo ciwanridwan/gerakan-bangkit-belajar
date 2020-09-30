@@ -19,7 +19,6 @@ Berita
                                 <th>No</th>
                                 <th>Judul</th>
                                 <th>Seo Judul</th>
-                                <th>Isi</th>
                                 <th>Penulis</th>
                                 <th>Gambar</th>
                                 <th>Status</th>
@@ -35,9 +34,8 @@ Berita
                                 <td>{{$nomor}}</td>
                                 <td>{{$item->judul}}</td>
                                 <td>{{$item->seo_judul}}</td>
-                                <td>{{$item->isi}}</td>
                                 <td>{{$item->penulis}}</td>
-                                <td>{{$item->gambar}}</td>
+                                <td><img src="{{ asset('storage/gambars/' . $item->gambar) }}" alt="{{$item->judul}}"></td>
                                 @if ($item->status == 0)
                                 <td><label class="badge badge-danger">Pending</label></td>
                                 @elseif ($item->status == 1)
@@ -45,7 +43,7 @@ Berita
                                     <label class="badge badge-success">Completed</label>
                                 </td>
                                 @endif
-                                <td><a href="#" class="btn btn-info">Edit</a></td>
+                                <td><a href="{{route('edit-berita', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
                                     <form action="#" method="POST">
                                         @csrf

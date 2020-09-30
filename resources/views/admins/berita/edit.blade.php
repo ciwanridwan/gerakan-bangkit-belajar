@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 @section('title')
 Berita
 @endsection
@@ -18,9 +18,9 @@ Berita
                     </div>
                     {{Session::put('message', null)}}
                     @endif
-                    <h4 class="card-title">Input Berita</h4>
+                    <h4 class="card-title">Edit Berita</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('store-berita')}}" method="POST" enctype="multipart/form-data">
+                    <form class="forms-sample" action="{{route('store-berita')}}" method="POST">
                         @csrf
                         @method('POST')
                         <div class="form-group">
@@ -39,7 +39,7 @@ Berita
 
                         <div class="form-group">
                             <label for="gambar">Gambar</label>
-                            <input type="file" class="form-control form-control-lg" id="gambar" placeholder="Gambar"
+                            <input type="file" class="form-control" id="gambar" placeholder="Gambar"
                                 name="gambar" required>
                             <p class="text-danger">{{ $errors->first('gambar') }}</p>
                         </div>
@@ -57,7 +57,7 @@ Berita
                             <p class="text-danger">{{ $errors->first('penulis') }}</p>
                         </div>
 
-                        <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                        <input type="hidden" name="user_id" value="">
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>
                     </form>

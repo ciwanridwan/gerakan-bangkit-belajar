@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Berita;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -22,7 +23,7 @@ class BeritaController extends Controller
         $confirm->status = 1;
         $confirm->update();
 
-        Session::put('message',  $confirm->judul. ' Berhasil Di Konfirmasi');
+        Session::put('message',  $confirm->judul . ' Berhasil Di Konfirmasi');
         return redirect()->back();
     }
     public function table()
@@ -54,36 +55,59 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
-        [
-            'judul' => 'required',
-            'seo_judul' => 'required',
-            'isi' => 'required',
-            'penulis' => 'required',
-            'gambar' => 'required',
-            'user_id' => 'nullable'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'judul' => 'required',
+                'seo_judul' => 'required',
+                'isi' => 'required',
+                'penulis' => 'required',
+                'gambar' => 'required|image|mimes:png,jpeg,jpg',
+                'user_id' => 'nullable'
+            ]
+        );
 
         if ($request->hasFile('gambar')) {
-            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
-            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
-            $extension = $request->file('gambar')->getClientOriginalExtension();
-            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
-            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
+            $file = $request->file('gambar');
+            $filename = time() . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/products', $filename);
+
+            $berita = Berita::create(
+                [
+                    'judul' => $request->judul,
+                    'seo_judul' => $request->seo_judul,
+                    'isi' => $request->isi,
+                    'penulis' => $request->penulis,
+                    'gambar' => $filename,
+                    'user_id' => $request->user_id,
+                    'status' => 0
+                ]
+            );
+            Session::put('message', 'Data Berhasil Ditambah');
+            return redirect()->back();
         }
-        $berita = new Berita();
-        $berita->judul = $request->input('judul');
-        $berita->seo_judul = $request->input('seo_judul');
-        $berita->isi = $request->input('isi');
-        $berita->penulis = $request->input('penulis');
-        $berita->gambar = $fileNameToStore;
-        $berita->user_id = $request->input('user_id');
-        $berita->save();
-        Session::put('message', 'Data Berhasil Ditambah');
-        return redirect()->back();
     }
+
+        // if ($request->hasFile('gambar')) {
+        //     $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+        //     $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+        //     $extension = $request->file('gambar')->getClientOriginalExtension();
+        //     $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+        //     $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+        // } else {
+        //     $fileNameToStore = 'noimage.jpg';
+        // }
+        // $berita = new Berita();
+        // $berita->judul = $request->input('judul');
+        // $berita->seo_judul = $request->input('seo_judul');
+        // $berita->isi = $request->input('isi');
+        // $berita->penulis = $request->input('penulis');
+        // $berita->gambar = $fileNameToStore;
+        // $berita->user_id = $request->input('user_id');
+        // $berita->save();
+        // Session::put('message', 'Data Berhasil Ditambah');
+        // return redirect()->back();
+    
 
     /**
      * Display the specified resource.
@@ -104,7 +128,8 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = Berita::find($id);
+        return view('berita.edit')->with('edit', $edit);
     }
 
     /**
@@ -116,7 +141,16 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Berita::find($id);
+        $update->judul = $request->input('judul');
+        $update->seo_judul = $request->input('seo_judul');
+        $update->gambar = $request->input('gambar');
+        $update->isi = $request->input('isi');
+        $update->penulis = $request->input('penulis');
+        $update->update();
+
+        Session::put('message', 'Data Berhasil Diperbaharui');
+        return redirect()->back();
     }
 
     /**

@@ -130,8 +130,8 @@
                     <div class="dropdown-header text-center">
                         <img class="img-md rounded-circle" src="{{ asset('src/assets/images/faces/face8.jpg')}}"
                             alt="Profile image">
-                        <p class="mb-1 mt-3 font-weight-semibold"></p>
-                        <p class="font-weight-light text-muted mb-0"></p>
+                        <p class="mb-1 mt-3 font-weight-semibold">{{auth()->guard('admin')->user()->nama}}</p>
+                        <p class="font-weight-light text-muted mb-0">{{auth()->guard('admin')->user()->email}}</p>
                     </div>
                     <a class="dropdown-item" href="">My Profile <span class="badge badge-pill badge-danger">1</span><i
                             class="dropdown-item-icon ti-dashboard"></i></a>

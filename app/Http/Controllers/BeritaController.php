@@ -97,7 +97,8 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = Berita::find($id);
+        return view('berita.edit')->with('edit', $edit);
     }
 
     /**
