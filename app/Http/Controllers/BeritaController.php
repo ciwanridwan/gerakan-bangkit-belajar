@@ -87,9 +87,10 @@ class BeritaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($seo_judul)
     {
-        //
+        $berita = Berita::find($seo_judul);
+        return view('berita.spesifik')->with('berita', $berita);
     }
 
     /**
