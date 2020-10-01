@@ -23,6 +23,7 @@
                 <p>
                     {{$item->deskripsi}}
                 </p>
+                <a href="{{route('show-berita', $item->seo_judul)}}" class="get-started-btn"> </a>
             </div>
         </div>
         @endforeach

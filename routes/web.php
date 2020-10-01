@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'LandingPageController@about')->name('index');
 // Berita
 Route::get('/berita', 'BeritaController@index')->name('berita');
-Route::get('/berita/show/{seo_judul}', 'BeritaController@show')->name('berita');
+Route::get('/berita/show/{seo_judul}', 'BeritaController@show')->name('show-berita');
 Route::get('/about', 'AboutController@index')->name('about');
 
 
