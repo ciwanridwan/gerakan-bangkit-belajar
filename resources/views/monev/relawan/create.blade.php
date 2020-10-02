@@ -23,12 +23,6 @@
             @csrf
             @method('POST')
             <div class="form-group">
-              <label for="nama">Nama DPR</label>
-              <input type="text" class="form-control" id="nama" placeholder="Nama Relawan" name="nama" required>
-              <p class="text-danger">{{ $errors->first('nama') }}</p>
-            </div>
-
-            <div class="form-group">
               <label for="exampleFormControlSelect2">Jenjang Relawan</label>
               <select class="form-control" id="exampleFormControlSelect2" name="jenjang" required>
                 <option value="">Pilih Jenjang</option>
@@ -38,6 +32,40 @@
               </select>
               <p class="text-danger">{{ $errors->first('jenjang') }}</p>
             </div>
+            
+            <div class="form-group">
+              <label for="exampleFormControlSelect2">Provinsi</label>
+              <select class="form-control" id="province_id" name="province_id" required>
+                <option value="">Pilih Provinsi</option>
+                @foreach ($provinces as $item)
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+              </select>
+              <p class="text-danger">{{ $errors->first('province_id') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlSelect2">Kota</label>
+              <select class="form-control" id="city_id" name="city_id" required>
+                <option value="">Pilih Kabupaten/Kota</option>
+              </select>
+              <p class="text-danger">{{ $errors->first('city_id') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail3">Kelurahan / Desa</label>
+              <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Kelurahan / Desa"
+                name="kelurahan" required>
+                <p class="text-danger">{{ $errors->first('kelurahan') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="nama">Nama DPR</label>
+              <input type="text" class="form-control" id="nama" placeholder="Nama Relawan" name="nama" required>
+              <p class="text-danger">{{ $errors->first('nama') }}</p>
+            </div>
+
+            
             <div class="form-group">
               <label class="col-sm-3 col-form-label">Sudah Follow Akun Instagram?</label>
               <div class="form-radio">
@@ -66,40 +94,6 @@
                     value="Belum"> Belum </label>
               </div>
               <p class="text-danger">{{ $errors->first('subscribe_youtube') }}</p>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Provinsi</label>
-              <select class="form-control" id="province_id" name="province_id" required>
-                <option value="">Pilih Provinsi</option>
-                @foreach ($provinces as $item)
-                <option value="{{$item->id}}">{{$item->name}}</option>
-                @endforeach
-              </select>
-              <p class="text-danger">{{ $errors->first('province_id') }}</p>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Kota</label>
-              <select class="form-control" id="city_id" name="city_id" required>
-                <option value="">Pilih Kabupaten/Kota</option>
-              </select>
-              <p class="text-danger">{{ $errors->first('city_id') }}</p>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Kecamatan</label>
-              <select class="form-control" id="district_id" name="district_id" required>
-                <option value="">Pilih Kecamatan</option>
-              </select>
-              <p class="text-danger">{{ $errors->first('district_id') }}</p>
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputEmail3">Kelurahan / Desa</label>
-              <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Kelurahan / Desa"
-                name="kelurahan" required>
-                <p class="text-danger">{{ $errors->first('kelurahan') }}</p>
             </div>
 
             <div class="form-group">

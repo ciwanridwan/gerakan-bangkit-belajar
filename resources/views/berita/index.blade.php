@@ -11,21 +11,26 @@
                 Kami Menyediakan Informasi Dan Berita<br>
             </p>
         </div>
+        
         @foreach ($berita as $item)
+        @if ($item->status == 1)
         <div class="row">
             <div class="col-lg-6 about-img wow fadeInLeft">
                 <img src="{{ asset('storage/gambars/'. $item->gambar)}}" alt="{{$item->judul}}">
             </div>
 
             <div class="col-lg-6 content wow fadeInRight">
-                <h2>{{$item->isi}}</h2>
-                
-                <p>
-                    {{$item->deskripsi}}
-                </p>
-                <a href="{{route('show-berita', $item->seo_judul)}}" class="get-started-btn"> </a>
+                <h2>{{$item->judul}}</h2>
+                <p>{{$item->isi}}</p>
+                <a href="{{route('show-berita', $item->seo_judul)}}" class="get-started-btn"> Lihat Selebihnya</a>
             </div>
         </div>
+
+        @else 
+        <p class="section-description" style="text-align: center">
+            Mohon maaf, untuk saat ini belum ada berita yang di publish<br>
+        </p>
+        @endif
         @endforeach
     </div>
 </section><!-- End About Section -->

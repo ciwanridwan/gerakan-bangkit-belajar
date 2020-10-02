@@ -20,7 +20,7 @@ Berita
                     @endif
                     <h4 class="card-title">Input Berita</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('store-berita')}}" method="POST" enctype="multipart/form-data">
+                    <form class="forms-sample" action="{{route('store-berita-admin')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group">
@@ -46,14 +46,8 @@ Berita
 
                         <div class="form-group">
                             <label for="isi">Isi</label>
-                            <textarea class="form-control" id="isi" name="isi" id="" cols="10" rows="3"></textarea>
+                            <textarea class="form-control" id="isi" name="isi" id="" cols="30" rows="10"></textarea>
                             <p class="text-danger">{{ $errors->first('isi') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" id="" cols="30" rows="10"></textarea>
-                            <p class="text-danger">{{ $errors->first('deskripsi') }}</p>
                         </div>
 
                         <div class="form-group">

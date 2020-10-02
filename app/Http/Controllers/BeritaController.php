@@ -6,7 +6,9 @@ use App\Berita;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
@@ -18,7 +20,7 @@ class BeritaController extends Controller
     public function table()
     {
         if (auth()->check()) {
-            $berita = Berita::where('user_id', auth()->user()->id)->paginate(10);    
+            $berita = Berita::where('user_id', auth()->user()->id)->paginate(10);
         }
         return view('berita.table')->with('berita', $berita);
     }
@@ -46,16 +48,17 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
-        [
-            'judul' => 'required',
-            'seo_judul' => 'required',
-            'isi' => 'required',
-            'penulis' => 'required',
-            'gambar' => 'required',
-            'user_id' => 'required',
-            'deskripsi' => 'required'
-        ]);
+        $this->validate(
+            $request,
+            [
+                'judul' => 'required',
+                'seo_judul' => 'required',
+                'isi' => 'required',
+                'penulis' => 'required',
+                'gambar' => 'required',
+                'user_id' => 'required'
+            ]
+        );
 
         if ($request->hasFile('gambar')) {
             $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
@@ -73,10 +76,9 @@ class BeritaController extends Controller
         $berita->penulis = $request->input('penulis');
         $berita->gambar = $fileNameToStore;
         $berita->user_id = $request->input('user_id');
-        $berita->deskripsi = $request->input('deskripsi');
         $berita->status = 0;
         $berita->save();
-        
+
         Session::put('message', 'Data Berhasil Ditambah');
         return redirect()->back();
     }
@@ -89,8 +91,9 @@ class BeritaController extends Controller
      */
     public function show($seo_judul)
     {
-        $berita = Berita::find($seo_judul);
-        return view('berita.spesifik')->with('berita', $berita);
+        $berita = Berita::where('seo_judul', $seo_judul)->first();
+        // dd($berita);
+        return view('berita.show')->with('berita', $berita);
     }
 
     /**
@@ -114,7 +117,33 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Berita::find($id);
+        $update->judul = $request->input('judul');
+        $update->seo_judul = $request->input('seo_judul');
+        $update->isi = $request->input('isi');
+        $update->penulis = $request->input('penulis');
+        $update->user_id = $request->input('user_id');
+        $update->status = 0;
+
+
+        if ($request->hasFile('gambar')) {
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+            $update->gambar = $fileNameToStore;
+
+            $select_old_gambar_name = DB::table('beritas')->where('id', $request->id)->first();
+
+            if ($select_old_gambar_name != 'noimage.jpg') {
+                Storage::delete('public/gambars', $select_old_gambar_name->gambar);
+            }
+        }
+        $update->update();
+
+        Session::put('message', 'Data Berhasil Ditambah');
+        return redirect('/berita/table');
     }
 
     /**
@@ -125,6 +154,10 @@ class BeritaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Berita::find($id);
+        $delete->delete();
+
+        Session::put('message', 'Data Berhasil DiHapus');
+        return redirect()->back();
     }
 }

@@ -45,15 +45,9 @@ Berita
                         </div>
 
                         <div class="form-group">
-                            <label for="isi">isi</label>
-                            <textarea class="form-control" id="isi" name="isi" id="" cols="10" rows="3"></textarea>
+                            <label for="isi">Isi</label>
+                            <textarea class="form-control" id="isi" name="isi" id="" cols="30" rows="10"></textarea>
                             <p class="text-danger">{{ $errors->first('isi') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" id="" cols="30" rows="10"></textarea>
-                            <p class="text-danger">{{ $errors->first('deskripsi') }}</p>
                         </div>
 
                         <div class="form-group">

@@ -90,7 +90,9 @@ class AboutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = About::find($id);
+        return view('admins.about.edit')->with('edit', $edit);
+        
     }
 
     /**
@@ -102,7 +104,23 @@ class AboutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = About::find($id);
+        if ($request->hasFile('gambar')) {
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+        $update->judul = $request->input('judul');
+        $update->isi = $request->input('isi');
+        $update->gambar = $fileNameToStore;
+        $update->update();
+        
+        Session::put('message', 'Data Berhasil Ditambah');
+        return redirect()->back();
     }
 
     /**
@@ -113,6 +131,8 @@ class AboutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = About::find($id);
+        $delete->delete();
+        return redirect()->back();
     }
 }

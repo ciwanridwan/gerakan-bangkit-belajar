@@ -10,6 +10,15 @@ Berita
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{Session::get('message')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{Session::put('message', null)}}
+                    @endif
                     <h4 class="card-title">Berita</h4>
                     <a href="{{route('create-berita')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
@@ -18,7 +27,7 @@ Berita
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Seo Judul</th>
+                                {{-- <th>Seo Judul</th> --}}
                                 <th>Penulis</th>
                                 <th>Gambar</th>
                                 <th>Status</th>
@@ -33,19 +42,19 @@ Berita
                             <tr>
                                 <td>{{$nomor}}</td>
                                 <td>{{$item->judul}}</td>
-                                <td>{{$item->seo_judul}}</td>
+                                {{-- <td>{{$item->seo_judul}}</td> --}}
                                 <td>{{$item->penulis}}</td>
                                 <td><img src="{{ asset('storage/gambars/' . $item->gambar) }}" alt="{{$item->judul}}"></td>
                                 @if ($item->status == 0)
                                 <td><label class="badge badge-danger">Pending</label></td>
                                 @elseif ($item->status == 1)
                                 <td>
-                                    <label class="badge badge-success">Completed</label>
+                                    <label class="badge badge-success">Published</label>
                                 </td>
                                 @endif
                                 <td><a href="{{route('edit-berita', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="#" method="POST">
+                                    <form action="{{route('delete-berita', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>

@@ -8,7 +8,9 @@ use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
@@ -64,7 +66,6 @@ class BeritaController extends Controller
                 'penulis' => 'required',
                 'gambar' => 'required|image|mimes:png,jpeg,jpg',
                 'user_id' => 'nullable',
-                'deskripsi' => 'required',
             ]
         );
 
@@ -83,36 +84,13 @@ class BeritaController extends Controller
         $berita->isi = $request->input('isi');
         $berita->penulis = $request->input('penulis');
         $berita->gambar = $fileNameToStore;
-        $berita->user_id = $request->input('user_id');
-        $berita->deskripsi = $request->input('deskripsi');
+        $berita->user_id = 0;
         $berita->status = 0;
         $berita->save();
         
         Session::put('message', 'Data Berhasil Ditambah');
         return redirect()->back();
     }
-
-        // if ($request->hasFile('gambar')) {
-        //     $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
-        //     $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
-        //     $extension = $request->file('gambar')->getClientOriginalExtension();
-        //     $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
-        //     $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
-        // } else {
-        //     $fileNameToStore = 'noimage.jpg';
-        // }
-        // $berita = new Berita();
-        // $berita->judul = $request->input('judul');
-        // $berita->seo_judul = $request->input('seo_judul');
-        // $berita->isi = $request->input('isi');
-        // $berita->penulis = $request->input('penulis');
-        // $berita->gambar = $fileNameToStore;
-        // $berita->user_id = $request->input('user_id');
-        // $berita->save();
-        // Session::put('message', 'Data Berhasil Ditambah');
-        // return redirect()->back();
-    
-
     /**
      * Display the specified resource.
      *
@@ -133,7 +111,7 @@ class BeritaController extends Controller
     public function edit($id)
     {
         $edit = Berita::find($id);
-        return view('berita.edit')->with('edit', $edit);
+        return view('admins.berita.edit')->with('edit', $edit);
     }
 
     /**
@@ -148,13 +126,27 @@ class BeritaController extends Controller
         $update = Berita::find($id);
         $update->judul = $request->input('judul');
         $update->seo_judul = $request->input('seo_judul');
-        $update->gambar = $request->input('gambar');
         $update->isi = $request->input('isi');
         $update->penulis = $request->input('penulis');
+
+        if ($request->hasFile('gambar')) {
+            $fileNameWithExtension = $request->file('gambar')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('gambar')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+            $update->gambar = $fileNameToStore;
+
+            $select_old_gambar_name = DB::table('beritas')->where('id', $request->id)->first();
+
+            if ($select_old_gambar_name != 'noimage.jpg') {
+                Storage::delete('public/gambars', $select_old_gambar_name->gambar);
+            }
+        }
         $update->update();
 
         Session::put('message', 'Data Berhasil Diperbaharui');
-        return redirect()->back();
+        return redirect('/gbb/berita/table');
     }
 
     /**
@@ -165,6 +157,10 @@ class BeritaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $berita = Berita::find($id);
+        $berita->delete();
+
+        Session::put('message', 'Data Berhasil Dihapus');
+        return redirect('/gbb/berita/table');
     }
 }

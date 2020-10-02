@@ -19,7 +19,7 @@ Berita
                     </div>
                     {{Session::put('message', null)}}
                     @endif
-                    <h4 class="card-title">Berita</h4>
+                    <h4 class="card-title">Tentang Kami</h4>
                     <a href="{{route('create-about')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
@@ -27,7 +27,6 @@ Berita
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Isi</th>
                                 <th>Gambar</th>
                                 <th>Action</th>
                             </tr>
@@ -40,11 +39,11 @@ Berita
                             <tr>
                                 <td>{{$nomor}}</td>
                                 <td>{{$item->judul}}</td>
-                                <td>{{$item->isi}}</td>
-                                <td>{{$item->gambar}}</td>
-                                <td><a href="#" class="btn btn-info">Edit</a></td>
+                                {{-- <td>{{$item->isi}}</td> --}}
+                                <td><img src="{{asset('storage/gambars/'. $item->gambar)}}" alt="{{$item->judul}}"></td>
+                                <td><a href="{{route('edit-about', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="#" method="POST">
+                                    <form action="{{route('delete-about', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>

@@ -67,7 +67,7 @@ class DataRelawanController extends Controller
         $deleteJenjang = Jenjang::find($id);
         $deleteJenjang->delete();
 
-        Session::put('success', 'Data Berhasil Dihapus');
+        Session::put('message', 'Data Berhasil Dihapus');
         return redirect()->back();
     }
 

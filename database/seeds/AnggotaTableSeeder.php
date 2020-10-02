@@ -2,10 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-class AnggotaSeeder extends Seeder
+class AnggotaTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

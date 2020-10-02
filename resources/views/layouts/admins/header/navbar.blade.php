@@ -1,5 +1,6 @@
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <img src="{{asset('src/assets/images/logo-gbb.png')}}" alt="" width="50px" height="50px">
         <a class="navbar-brand brand-logo" href="{{url('/')}}">GBB
         <a class="navbar-brand brand-logo-mini" href="{{url('/')}}">
             <img src="{{ asset('src/assets/images/logo-mini.svg')}}" alt="logo" /> </a>

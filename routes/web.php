@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('index');
+// Route::get('/test', function () {
+//     return view('berita.spesifik');
 // });
 Route::get('/', 'LandingPageController@about')->name('index');
 // Berita
@@ -45,6 +45,9 @@ Route::group(['prefix' => 'gbb'], function () {
             Route::get('/create', 'AboutController@create')->name('create-about');
             Route::get('/table', 'AboutController@table')->name('table-about');
             Route::post('/store', 'AboutController@store')->name('store-about');
+            Route::get('/edit/{id}', 'AboutController@edit')->name('edit-about');
+            Route::post('update/{id}', 'AboutController@update')->name('update-about');
+            Route::post('delete/{id}', 'AboutController@destroy')->name('delete-about');
         });
 
         // BERITA
@@ -53,6 +56,9 @@ Route::group(['prefix' => 'gbb'], function () {
             Route::get('create', 'Admin\BeritaController@create')->name('create-berita-admin');
             Route::post('store', 'Admin\BeritaController@store')->name('store-berita-admin');
             Route::post('confirm/{id}', 'Admin\BeritaController@confirm')->name('confirm-berita');
+            Route::get('edit/{id}', 'Admin\BeritaController@edit')->name('edit-berita-admin');
+            Route::post('update/{id}', 'Admin\BeritaController@update')->name('update-berita-admin');
+            Route::post('delete/{id}', 'Admin\BeritaController@destroy')->name('delete-berita-admin');
         });
         // SANGGAR
         Route::group(['prefix' => 'sanggar'], function () {
@@ -104,10 +110,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile/edit/{id}', 'ProfileUserController@edit')->name('profile-edit');
-Route::get('/berita/create', 'BeritaController@create')->name('create-berita');
-Route::post('/berita/store', 'BeritaController@store')->name('store-berita');
-Route::get('/berita/table', 'BeritaController@table')->name('table-berita');
-Route::get('/edit/{id}', 'BeritaController@edit')->name('edit-berita');
+
+// Berita
+Route::group(['prefix' => 'berita'], function () {
+    Route::get('create', 'BeritaController@create')->name('create-berita');
+    Route::post('store', 'BeritaController@store')->name('store-berita');
+    Route::get('table', 'BeritaController@table')->name('table-berita');
+    Route::get('/edit/{id}', 'BeritaController@edit')->name('edit-berita');
+    Route::post('/update/{id}', 'BeritaController@update')->name('update-berita');
+    Route::post('/delete/{id}', 'BeritaController@destroy')->name('delete-berita');
+});
+
 
 Route::group(['prefix' => 'relawan', 'middleware' => 'auth'], function () {
     Route::get('/create', 'RelawanController@create')->name('create-relawan');

@@ -20,14 +20,14 @@ Berita
                     {{Session::put('message', null)}}
                     @endif
                     <h4 class="card-title">Berita</h4>
-                    <a href="{{route('create-berita')}}" class="btn btn-success mr-2">Tambah</a>
+                    <a href="{{route('create-berita-admin')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Seo Judul</th>
+                                {{-- <th>Seo Judul</th> --}}
                                 <th>Penulis</th>
                                 <th>Gambar</th>
                                 <th>Status</th>
@@ -42,9 +42,9 @@ Berita
                             <tr>
                                 <td>{{$nomor}}</td>
                                 <td>{{$item->judul}}</td>
-                                <td>{{$item->seo_judul}}</td>
+                                {{-- <td>{{$item->seo_judul}}</td> --}}
                                 <td>{{$item->penulis}}</td>
-                                <td>{{$item->gambar}}</td>
+                                <td><img src="{{ asset('storage/gambars/'. $item->gambar)}}" alt=""></td> 
                                 @if ($item->status == 0)
                                 <td> <form action="{{route('confirm-berita', $item->id)}}" method="POST">
                                     @csrf
@@ -52,11 +52,11 @@ Berita
                                     <button class="btn btn-primary" type="submit">Confirm</button>
                                 </form>
                                 @elseif ($item->status == 1)
-                                <td><label class="badge badge-success">Completed</label></td>
+                                <td><label class="badge badge-success">Published</label></td>
                                 @endif
-                                <td><a href="#" class="btn btn-info">Edit</a></td>
+                                <td><a href="{{route('edit-berita-admin', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="#" method="POST">
+                                    <form action="{{route('delete-berita-admin', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>

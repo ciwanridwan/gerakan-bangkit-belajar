@@ -20,44 +20,41 @@ Berita
                     @endif
                     <h4 class="card-title">Edit Berita</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('store-berita')}}" method="POST">
+                    <form class="forms-sample" action="{{route('update-berita-admin', $edit->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group">
                             <label for="judul">Judul</label>
-                            <input type="text" class="form-control" id="judul" placeholder="Judul" name="judul"
-                                required>
+                            <input type="text" class="form-control " id="judul" placeholder="Judul" name="judul" value="{{$edit->judul}}">
                             <p class="text-danger">{{ $errors->first('judul') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="seo_judul">Seo Judul</label>
                             <input type="text" class="form-control" id="seo_judul" placeholder="Seo Judul"
-                                name="seo_judul" required>
+                                name="seo_judul" value="{{$edit->seo_judul}}">
                             <p class="text-danger">{{ $errors->first('seo_judul') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="gambar">Gambar</label>
-                            <input type="file" class="form-control" id="gambar" placeholder="Gambar"
-                                name="gambar" required>
+                            <input type="file" class="form-control form-control-lg" id="gambar" placeholder="Gambar"
+                                name="gambar" value="{{$edit->gambar}}">
                             <p class="text-danger">{{ $errors->first('gambar') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="isi">isi</label>
-                            <textarea class="form-control" id="isi" name="isi" id="" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" id="isi" name="isi" id="" cols="30" rows="10">{{$edit->isi}}</textarea>
                             <p class="text-danger">{{ $errors->first('isi') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="penulis">Penulis</label>
-                            <input type="text" class="form-control" id="penulis" placeholder="penulis" name="penulis"
-                                required>
+                            <input type="text" class="form-control" id="penulis" placeholder="penulis" name="penulis" value="{{$edit->penulis}}">
                             <p class="text-danger">{{ $errors->first('penulis') }}</p>
                         </div>
 
-                        <input type="hidden" name="user_id" value="">
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>
                     </form>

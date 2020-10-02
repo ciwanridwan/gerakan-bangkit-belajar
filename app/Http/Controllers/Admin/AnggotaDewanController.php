@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Anggota;
 use App\Http\Controllers\Controller;
+use App\Jenjang;
+use App\Province;
 use Illuminate\Http\Request;
 
 class AnggotaDewanController extends Controller
@@ -26,7 +28,9 @@ class AnggotaDewanController extends Controller
      */
     public function create()
     {
-        return view('admins.dewans.create');
+        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $jenjang = Jenjang::all();
+        return view('admins.dewans.create')->with('jenjang', $jenjang)->with('provinces', $provinces);
     }
 
     /**

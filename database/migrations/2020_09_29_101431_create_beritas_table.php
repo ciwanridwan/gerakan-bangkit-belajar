@@ -18,9 +18,10 @@ class CreateBeritasTable extends Migration
             $table->string('judul');
             $table->string('seo_judul');
             $table->string('gambar');
-            $table->string('isi');
+            $table->longText('isi');
             $table->string('penulis');
             $table->foreignId('user_id');
+            $table->integer('status');
             $table->timestamps();
         });
     }

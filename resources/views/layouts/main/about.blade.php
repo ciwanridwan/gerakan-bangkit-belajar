@@ -1,6 +1,7 @@
 <!-- ======= About Section ======= -->
 <section id="about" class="section-bg">
   <div class="container-fluid">
+    @if ($about->status == 1)
     <div class="section-header">
       <h3 class="section-title">Tentang Kami</h3>
       <span class="section-divider"></span>
@@ -20,17 +21,9 @@
         <p>
           {{$about->deskripsi}}
         </p>
-
-        {{-- <ul>
-          <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-          <li><i class="ion-android-checkmark-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.
-          </li>
-          <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-            aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla
-            pariatur.</li>
-        </ul> --}}
       </div>
     </div>
-
+    @endif
   </div>
-</section><!-- End About Section -->
+</section>
+<!-- End About Section -->

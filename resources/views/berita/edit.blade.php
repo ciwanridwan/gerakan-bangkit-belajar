@@ -20,27 +20,27 @@ Berita
                     @endif
                     <h4 class="card-title">Edit Berita</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="#" method="POST" enctype="multipart/form-data">
+                    <form class="forms-sample" action="{{route('update-berita', $edit->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group">
                             <label for="judul">Judul</label>
                             <input type="text" class="form-control" id="judul" placeholder="Judul" name="judul" value="{{$edit->judul}}"
-                                required>
+                                >
                             <p class="text-danger">{{ $errors->first('judul') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="seo_judul">Seo Judul</label>
                             <input type="text" class="form-control" id="seo_judul" placeholder="Seo Judul"
-                                name="seo_judul" value="{{$edit->seo_judul}}" required>
+                                name="seo_judul" value="{{$edit->seo_judul}}" >
                             <p class="text-danger">{{ $errors->first('seo_judul') }}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="gambar">Gambar</label>
                             <input type="file" class="form-control form-control-lg" id="gambar" placeholder="Gambar"
-                                name="gambar" value="{{$edit->gambar}}" required>
+                                name="gambar" value="{{$edit->gambar}}" >
                             <p class="text-danger">{{ $errors->first('gambar') }}</p>
                         </div>
 
@@ -53,7 +53,7 @@ Berita
                         <div class="form-group">
                             <label for="penulis">Penulis</label>
                             <input type="text" class="form-control" id="penulis" placeholder="penulis" name="penulis" value="{{$edit->penulis}}"
-                                required>
+                                >
                             <p class="text-danger">{{ $errors->first('penulis') }}</p>
                         </div>
 
