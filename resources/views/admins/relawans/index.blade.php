@@ -10,6 +10,17 @@ Data Relawan
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    @if (Session::has('message'))
+                    <div class="alert alert-success">
+                      <p>
+                        {{Session::get('message')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </p>
+                    </div>
+                    {{Session::put('message', null)}}
+                    @endif
                     <h4 class="card-title">Data Relawan</h4>
                     <a href="{{route('create-data-relawan')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
@@ -19,7 +30,7 @@ Data Relawan
                                 <th>ID</th>
                                 <th>Nama</th>
                                 <th>Jenjang</th>
-                                <th>Kode</th>
+                                <th>Daerah</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -29,25 +40,38 @@ Data Relawan
                             @endphp
                             @forelse ($relawan as $item)
                             <tr>
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->nama}}</td>
-                                <td>{{$item->jenjang}}</td>
-                                @if ($item->jenjang == 'DPR RI')
+                                <td>{{$nomor}}</td>
+                                @foreach ($anggota as $q)
+                                @if ($item->anggota_id == $q->id)
+                                 <td>{{$q->nama}}</td>     
+                                @endif
+                                @endforeach
+
+                                @foreach ($jenjang as $p)
+                                    @if ($item->jenjang_id == $p->id)
+                                    <td>{{$p->nama}}</td>        
+                                    @endif
+                                @endforeach
+
+                                @if ($item->jenjang_id == 1)
                                 <td>0</td>
-                                @elseif ($item->jenjang == 'DPRD PROVINSI')
+                                @elseif ($item->jenjang_id == 2)
                                 <td>{{$item->province_id}}</td>
                                 @else
                                 <td>{{$item->city_id}}</td>
                                 @endif
-                                <td><a href="{{route('edit-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
+                                <td><a href="{{route('edit-data-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="{{route('delete-relawan', $item->id)}}" method="POST">
+                                    <form action="{{route('delete-data-relawan', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                            $nomor = $nomor + 1;
+                            @endphp
                             @empty
                             <tr>
                                 <td colspan="3">Tidak Ada Data</td>

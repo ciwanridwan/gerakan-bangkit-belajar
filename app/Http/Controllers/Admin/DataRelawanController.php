@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Anggota;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Jenjang;
 use App\Province;
 use App\Relawan;
@@ -82,6 +84,38 @@ class DataRelawanController extends Controller
         return view('admins.account.create');
     }
 
+    public function editAccount($id)
+    {
+        $akun = User::find($id);
+        return view('admins.account.edit')->with('akun', $akun);
+    }
+
+    public function updateAccount(Request $request, $id)
+    {
+        $this->validate($request,
+        [
+            'password' => 'string|min:8|confirmed'
+        ]);
+        $update = User::find($id);
+        $update->name = $request->input('name');
+        $update->email = $request->input('email');
+        $update->password = $request->input('password');
+        $update->remember_token = Str::random(16);
+        $update->update();
+
+        Session::put('success', 'Data Berhasil Diperbaharui');
+        return redirect()->back();
+    }
+
+    public function deleteAccount($id)
+    {
+        $del = User::find($id);
+        $del->delete();
+
+        Session::put('success', 'Data Berhasil Dihapus');
+        return redirect()->back();
+    }
+
     public function storeAccount(Request $request)
     {
         $this->validate($request,
@@ -103,7 +137,9 @@ class DataRelawanController extends Controller
     public function index()
     {
         $relawan = Relawan::all();
-        return view('admins.relawans.index')->with('relawan', $relawan);
+        $anggota = Anggota::all();
+        $jenjang = Jenjang::all();
+        return view('admins.relawans.index', compact('anggota', 'jenjang', 'relawan'));
     }
 
     /**
@@ -115,7 +151,8 @@ class DataRelawanController extends Controller
     {
         $provinces = Province::orderBy('created_at', 'DESC')->get();
         $jenjang = Jenjang::all();
-        return view('admins.relawans.create')->with('provinces', $provinces)->with('jenjang', $jenjang);
+        $anggota = Anggota::all();
+        return view('admins.relawans.create')->with('provinces', $provinces)->with('jenjang', $jenjang)->with('anggota', $anggota);
     }
 
     /**
@@ -128,31 +165,35 @@ class DataRelawanController extends Controller
     {
         $this->validate($request,
         [
-            'nama' => 'required|string',
-            'jenjang' => 'required|string',
+            'anggota_id' => 'required|exists:anggotas,id',
+            'jenjang_id' => 'required|exists:jenjangs,id',
             'follow_ig' => 'required|string',
             'subscribe_youtube' => 'required|string',
-            'province_id' => 'required|exists:provinces,id',
-            'city_id' => 'required|exists:cities,id',
-            'district_id' => 'required|exists:districts,id',
-            'kelurahan' => 'required|string',
-            'jumlah_sanggar' => 'required|string',
-            'jumlah_pelajar' => 'required|string',
-            'zona_covid' => 'required|string',
+            'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
+            'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
+            'district_id' => 'nullable|exists:districts,id',
+            'kelurahan' => 'nullable|string',
+            'nama_teknisi' => 'required|string',
+            'nama_aktivis' => 'required|string',
+            'email' => 'required|email',
+            'instagram' => 'required|string',
+            'nomor_hp' => 'required',
         ]);
 
         $relawan = new Relawan();
-        $relawan->nama = $request->input('nama');
-        $relawan->jenjang = $request->input('jenjang');
+        $relawan->anggota_id = $request->input('anggota_id');
+        $relawan->jenjang_id = $request->input('jenjang_id');
         $relawan->follow_ig = $request->input('follow_ig');
         $relawan->subscribe_youtube = $request->input('subscribe_youtube');
         $relawan->province_id = $request->input('province_id');
         $relawan->city_id = $request->input('city_id');
         $relawan->district_id = $request->input('district_id');
         $relawan->kelurahan = $request->input('kelurahan');
-        $relawan->jumlah_sanggar = $request->input('jumlah_sanggar');
-        $relawan->jumlah_pelajar = $request->input('jumlah_pelajar');
-        $relawan->zona_covid = $request->input('zona_covid');
+        $relawan->nama_teknisi = $request->input('nama_teknisi');
+        $relawan->nama_aktivis = $request->input('nama_aktivis');
+        $relawan->email = $request->input('email');
+        $relawan->instagram = $request->input('instagram');
+        $relawan->nomor_hp = $request->input('nomor_hp');
         $relawan->save();
 
         Session::put('message', 'Data Relawan Berhasil Diinput');
@@ -179,7 +220,10 @@ class DataRelawanController extends Controller
     public function edit($id)
     {
         $editRelawan = Relawan::find($id);
-        return view('admins.relawans.edit')->with('editRelawan', $editRelawan);
+        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $jenjang = Jenjang::all();
+        $anggota = Anggota::all();
+        return view('admins.relawans.edit')->with('provinces', $provinces)->with('jenjang', $jenjang)->with('anggota', $anggota)->with('editRelawan', $editRelawan);
     }
 
     /**
@@ -191,7 +235,33 @@ class DataRelawanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'anggota_id' => 'exists:anggotas,id',
+            'jenjang_id' => 'exists:jenjangs,id',
+            'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
+            'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
+            'district_id' => 'nullable|exists:districts,id',
+            'kelurahan' => 'nullable|string',
+        ]);
+
+        $relawan = Relawan::find($id);
+        $relawan->anggota_id = $request->input('anggota_id');
+        $relawan->jenjang_id = $request->input('jenjang_id');
+        $relawan->follow_ig = $request->input('follow_ig');
+        $relawan->subscribe_youtube = $request->input('subscribe_youtube');
+        $relawan->province_id = $request->input('province_id');
+        $relawan->city_id = $request->input('city_id');
+        $relawan->district_id = $request->input('district_id');
+        $relawan->kelurahan = $request->input('kelurahan');
+        $relawan->nama_teknisi = $request->input('nama_teknisi');
+        $relawan->nama_aktivis = $request->input('nama_aktivis');
+        $relawan->email = $request->input('email');
+        $relawan->instagram = $request->input('instagram');
+        $relawan->nomor_hp = $request->input('nomor_hp');
+        $relawan->update();
+
+        Session::put('message', 'Data Relawan Berhasil Diperbaharui');
+        return redirect()->back();
     }
 
     /**
@@ -202,6 +272,10 @@ class DataRelawanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $relawan = Relawan::find($id);
+        $relawan->delete();
+
+        Session::put('message', 'Data Relawan Berhasil Dihapus');
+        return redirect()->back();
     }
 }

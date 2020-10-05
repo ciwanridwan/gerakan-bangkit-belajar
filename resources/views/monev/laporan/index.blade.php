@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 
 @section('title')
-Data Relawan
+Laporan Team
 @endsection
 
 @section('content')
@@ -10,56 +10,57 @@ Data Relawan
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @if (Session::has('success'))
-                    <div class="alert alert-success">
-                        <p>
-                            {{Session::get('success')}}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </p>
-                        
-                        {{Session::put('success', null)}}
+                    @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{Session::get('message')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    {{Session::put('message', null)}}
                     @endif
-                    <h4 class="card-title">Akun User</h4>
-                    <a href="{{route('create-account-relawan')}}" class="btn btn-success mr-2">Tambah</a>
+                    <h4 class="card-title">Laporan</h4>
+                    <a target="_blank" href="{{route('cetak-monev-team', auth()->user()->id)}}" class="btn btn-success mr-2">Download</a>
+
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
+                                <th>Jenjang</th>
+                                <th>Nama DPR</th>
+                                <th colspan="2">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                             $nomor = 1;
                             @endphp
-                            @forelse ($user as $item)
+                            {{-- @forelse ($jenjang as $item)
                             <tr>
                                 <td>{{$nomor}}</td>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->email}}</td>
-                                <td> <a href="{{route('edit-account-relawan', $item->id)}}" class="btn btn-info"> Edit </a>
+                                <td>{{$item->nama}}</td>
+                                <td> <a href="{{route('edit-jenjang-relawan', $item->id)}}" class="btn btn-info"> Edit </a>
                                 </td>
                                 <td>
-                                    <form action="{{route('delete-account-relawan', $item->id)}}" method="POST">
+                                    <form action="{{route('delete-jenjang-relawan', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                            $nomor = $nomor + 1;
+                            @endphp
                             @empty
                             <tr>
-                                <td colspan="3">Tidak Ada Data</td>
-                            </tr>
-                            @endforelse
-                            {{-- <td>
+                                <td colspan="3">Tidak Ada Data</td> --}}
+                                {{-- <td>
                                     <label class="badge badge-danger">Pending</label>
                                 </td> --}}
+                            {{-- </tr>
+                            @endforelse --}}
                         </tbody>
                     </table>
                 </div>

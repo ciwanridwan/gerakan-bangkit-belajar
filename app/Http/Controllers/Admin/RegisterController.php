@@ -56,7 +56,7 @@ class RegisterController extends Controller
             [
                 'nama' => 'required|string|max:255',
                 'email' => 'required|email|unique:admins',
-                'password' => 'required|string|min:6|confirmed',
+                'password' => 'required|string|min:8|confirmed',
             ], 
             $customErrorMessage,
         );

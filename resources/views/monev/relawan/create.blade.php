@@ -13,9 +13,12 @@
               <div class="alert alert-success">
                 <p>
                 {{Session::get('message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
                 </p>
-                {{Session::put('message', null)}}
               </div>
+              {{Session::put('message', null)}}
           @endif
           <h4 class="card-title">Input Data Relawan</h4>
           {{-- <p class="card-description"> Basic form elements </p> --}}
@@ -23,19 +26,19 @@
             @csrf
             @method('POST')
             <div class="form-group">
-              <label for="exampleFormControlSelect2">Jenjang Relawan</label>
-              <select class="form-control" id="exampleFormControlSelect2" name="jenjang" required>
+              <label for="jenjang_id">Jenjang Relawan</label>
+              <select class="form-control" id="jenjang_id" name="jenjang_id" required>
                 <option value="">Pilih Jenjang</option>
-                <option value="DPR RI">DPR RI</option>
-                <option value="DPRD PROVINSI">DPRD PROVINSI</option>
-                <option value="DPRD KAB/KOTA">DPRD KAB/KOTA</option>
+                @foreach ($jenjang as $item)
+                <option value="{{$item->id}}">{{$item->nama}}</option>
+                @endforeach
               </select>
-              <p class="text-danger">{{ $errors->first('jenjang') }}</p>
+              <p class="text-danger">{{ $errors->first('jenjang_id') }}</p>
             </div>
             
             <div class="form-group">
-              <label for="exampleFormControlSelect2">Provinsi</label>
-              <select class="form-control" id="province_id" name="province_id" required>
+              <label for="province_id">Provinsi</label>
+              <select class="form-control" id="province_id" name="province_id">
                 <option value="">Pilih Provinsi</option>
                 @foreach ($provinces as $item)
                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -46,25 +49,37 @@
 
             <div class="form-group">
               <label for="exampleFormControlSelect2">Kota</label>
-              <select class="form-control" id="city_id" name="city_id" required>
+              <select class="form-control" id="city_id" name="city_id">
                 <option value="">Pilih Kabupaten/Kota</option>
               </select>
               <p class="text-danger">{{ $errors->first('city_id') }}</p>
             </div>
 
             <div class="form-group">
-              <label for="exampleInputEmail3">Kelurahan / Desa</label>
-              <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Kelurahan / Desa"
-                name="kelurahan" required>
+              <label for="district_id">Kecamatan</label>
+              <select class="form-control" id="district_id" name="district_id">
+                <option value="">Pilih Kecamatan</option>
+              </select>
+              <p class="text-danger">{{ $errors->first('district_id') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="kelurahan">Kelurahan / Desa</label>
+              <input type="text" class="form-control" id="kelurahan" placeholder="Kelurahan / Desa"
+                name="kelurahan">
                 <p class="text-danger">{{ $errors->first('kelurahan') }}</p>
             </div>
 
             <div class="form-group">
-              <label for="nama">Nama DPR</label>
-              <input type="text" class="form-control" id="nama" placeholder="Nama Relawan" name="nama" required>
-              <p class="text-danger">{{ $errors->first('nama') }}</p>
+              <label for="anggota_id">Nama Anggota</label>
+              <select class="form-control" id="anggota_id" name="anggota_id">
+                <option value="">Pilih Anggota</option>
+                @foreach ($anggota as $item)
+                <option value="{{$item->id}}">{{$item->nama}}</option>
+                @endforeach
+              </select>
+              <p class="text-danger">{{ $errors->first('anggota_id') }}</p>
             </div>
-
             
             <div class="form-group">
               <label class="col-sm-3 col-form-label">Sudah Follow Akun Instagram?</label>
@@ -97,32 +112,43 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleInputEmail3">Jumlah Sanggar</label>
-              <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Jumlah Sanggar"
-                name="jumlah_sanggar" required>
-                <p class="text-danger">{{ $errors->first('jumlah_sanggar') }}</p>
+              <label for="nama_aktivis">Nama Aktivis</label>
+              <input type="text" class="form-control" id="nama_aktivis" placeholder="Nama Aktivis"
+                name="nama_aktivis" required>
+                <p class="text-danger">{{ $errors->first('nama_aktivis') }}</p>
             </div>
 
             <div class="form-group">
-              <label for="exampleInputEmail3">Jumlah Pelajar</label>
-              <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Jumlah Pelajar"
-                name="jumlah_pelajar" required>
-                <p class="text-danger">{{ $errors->first('jumlah_pelajar') }}</p>
+              <label for="nama_teknisi">Nama Teknisi</label>
+              <input type="text" class="form-control" id="nama_teknisi" placeholder="Nama Teknisi"
+                name="nama_teknisi" required>
+                <p class="text-danger">{{ $errors->first('nama_teknisi') }}</p>
             </div>
 
             <div class="form-group">
-              <label for="exampleFormControlSelect2">Zona Covid</label>
-              <select class="form-control" id="exampleFormControlSelect2" name="zona_covid" required>
-                <option value="">Pilih Zona</option>
-                <option value="Merah">Merah</option>
-                <option value="Kuning">Kuning</option>
-                <option value="Hijau">Hijau</option>
-              </select>
-              <p class="text-danger">{{ $errors->first('zona_covid') }}</p>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Email"
+                name="email" required>
+                <p class="text-danger">{{ $errors->first('email') }}</p>
             </div>
+
+            <div class="form-group">
+              <label for="instagram">Instagram</label>
+              <input type="text" class="form-control" id="instagram" placeholder="Instagram"
+                name="instagram" required>
+                <p class="text-danger">{{ $errors->first('instagram') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="nomor_hp">Nomor HP</label>
+              <input type="number" class="form-control" id="nomor_hp" placeholder="Nomor Handphone"
+                name="nomor_hp" required>
+                <p class="text-danger">{{ $errors->first('nomor_hp') }}</p>
+            </div>
+
             <button type="submit" class="btn btn-success mr-2">Submit</button>
-            <button class="btn btn-light">Cancel</button>
           </form>
+          <button class="btn btn-light">Cancel</button>
         </div>
       </div>
     </div>

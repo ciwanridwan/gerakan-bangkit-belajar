@@ -2,29 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Monev;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
-class DashboardController extends Controller
+class LaporanAdminController extends Controller
 {
-    public function editProfile($id)
+    public function cetak()
     {
-        $profile = Admin::find($id);
-        return view('admins.profiles.edit')->with('profile', $profile);
-    }
-
-    public function updateProfile(Request $request,$id)
-    {
-        $profile = Admin::find($id);
-        $profile->nama = $request->input('nama');
-        $profile->email = $request->input('email');
-        $profile->password = $request->input('password');
-        $profile->update();
-
-        Session::put('message', 'Succes, Data Berhasil Diperbaharui');
-        return redirect()->back();
+        $monev = Monev::all();
+        $pdf = PDF::loadView('monev.laporan.cetak_pdf', ['monev' => $monev]);
+        return $pdf->download('laporan-team-gbb');
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +22,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admins.dashboard');
+        return view('admins.laporan.index');
     }
 
     /**

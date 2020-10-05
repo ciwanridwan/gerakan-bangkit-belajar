@@ -35,10 +35,18 @@ Route::group(['prefix' => 'gbb'], function () {
     Route::get('login', 'Admin\LoginController@create')->name('login-admin');
     Route::get('register', 'Admin\RegisterController@create')->name('register-admin');
     Route::post('store-register', 'Admin\RegisterController@store')->name('store-register');
+    Route::get('edit-profile/{id}', 'Admin\DashboardController@editProfile')->name('edit-profile-admin');
+    Route::post('update-profile/{id}', 'Admin\DashboardController@updateProfile')->name('update-profile-admin');
 
     Route::group(['middleware' => 'admin'], function () {
         Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
         Route::get('logout', 'Admin\LoginController@logout')->name('logout-admin');
+
+        // Laporan 
+        Route::group(['prefix' => 'laporan'], function (){
+            Route::get('laporan-admin', 'Admin\LaporanAdminController@index')->name('laporan-admin');
+            Route::get('laporan/cetak-pdf', 'Admin\LaporanAdminController@cetak')->name('cetak-laporan-admin');
+        });
 
         // About
         Route::group(['prefix' => 'about'], function () {
@@ -69,16 +77,20 @@ Route::group(['prefix' => 'gbb'], function () {
         // ANGGOTA DEWAN
         Route::group(['prefix' => 'anggota-dewan'], function () {
             Route::get('create', 'Admin\AnggotaDewanController@create')->name('create-anggota-dewan');
+            Route::post('store', 'Admin\AnggotaDewanController@store')->name('store-dewan');
             Route::get('index', 'Admin\AnggotaDewanController@index')->name('index-dewan');
+            Route::get('edit/{id}', 'Admin\AnggotaDewanController@edit')->name('edit-dewan');
+            Route::post('update/{id}', 'Admin\AnggotaDewanController@update')->name('update-dewan');
+            Route::post('delete/{id}', 'Admin\AnggotaDewanController@destroy')->name('delete-dewan');
         });
         // RELAWAN
         Route::group(['prefix' => 'relawan'], function () {
             Route::get('create', 'Admin\DataRelawanController@create')->name('create-data-relawan');
             Route::get('index', 'Admin\DataRelawanController@index')->name('index-data-relawan');
-            Route::get('edit/{id}', 'Admin\DataRelawanController@edit')->name('edit-relawan');
+            Route::get('edit/{id}', 'Admin\DataRelawanController@edit')->name('edit-data-relawan');
             Route::post('store', 'Admin\DataRelawanController@store')->name('store-data-relawan');
-            Route::post('update/{id}', 'Admin\DataRelawanController@update')->name('update-relawan');
-            Route::post('delete/{id}', 'Admin\DataRelawanController@destroy')->name('delete-relawan');
+            Route::post('update/{id}', 'Admin\DataRelawanController@update')->name('update-data-relawan');
+            Route::post('delete/{id}', 'Admin\DataRelawanController@destroy')->name('delete-data-relawan');
 
             // AKUN USER
             Route::group(['prefix' => 'account'], function () {
@@ -135,4 +147,11 @@ Route::group(['prefix' => 'fasilitas', 'middleware' => 'auth'], function () {
 Route::group(['prefix' => 'identitas-relawan', 'middleware' => 'auth'], function () {
     Route::get('/create', 'IdentitasRelawanController@create')->name('create-identitas');
     Route::post('/store', 'IdentitasRelawanController@store')->name('store-identitas');
+});
+
+Route::group(['prefix' => 'laporan'], function (){
+    Route::get('/index', 'LaporanTeamController@index')->name('laporan-team');
+    Route::get('monev/create', 'MonevController@create')->name('create-laporan');
+    Route::post('store/create', 'MonevController@store')->name('store-laporan');
+    Route::get('monev/cetak/{user_id}', 'LaporanTeamController@cetak')->name('cetak-monev-team');
 });

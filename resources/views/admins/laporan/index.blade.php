@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-Data Relawan
+Laporan
 @endsection
 
 @section('content')
@@ -10,42 +10,38 @@ Data Relawan
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @if (Session::has('success'))
-                    <div class="alert alert-success">
-                        <p>
-                            {{Session::get('success')}}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </p>
-                        
-                        {{Session::put('success', null)}}
-                    </div>
-                    @endif
-                    <h4 class="card-title">Akun User</h4>
-                    <a href="{{route('create-account-relawan')}}" class="btn btn-success mr-2">Tambah</a>
+                    <h4 class="card-title">Laporan</h4>
+                    <a href="#" class="btn btn-success mr-2">Download</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
+                                <th>Jumlah Anggota</th>
+                                <th>Jumlah Perprovinsi</th>
+                                <th>Jumlah Berita</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                             $nomor = 1;
                             @endphp
-                            @forelse ($user as $item)
+                            {{-- @forelse ($relawan as $item)
                             <tr>
-                                <td>{{$nomor}}</td>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->email}}</td>
-                                <td> <a href="{{route('edit-account-relawan', $item->id)}}" class="btn btn-info"> Edit </a>
-                                </td>
+                                <td>{{$item->id}}</td>
+                                <td>{{$item->nama}}</td>
+                                <td>{{$item->jenjang}}</td>
+                                @if ($item->jenjang == 'DPR RI')
+                                <td>0</td>
+                                @elseif ($item->jenjang == 'DPRD PROVINSI')
+                                <td>{{$item->province_id}}</td>
+                                @else
+                                <td>{{$item->city_id}}</td>
+                                @endif
+                                <td><a href="{{route('edit-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="{{route('delete-account-relawan', $item->id)}}" method="POST">
+                                    <form action="{{route('delete-relawan', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>
@@ -56,7 +52,7 @@ Data Relawan
                             <tr>
                                 <td colspan="3">Tidak Ada Data</td>
                             </tr>
-                            @endforelse
+                            @endforelse --}}
                             {{-- <td>
                                     <label class="badge badge-danger">Pending</label>
                                 </td> --}}

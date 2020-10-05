@@ -1,30 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Admin;
-use App\Http\Controllers\Controller;
+use App\Anggota;
+use App\Jenjang;
+use App\Monev;
+use App\Relawan;
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
-class DashboardController extends Controller
+class LaporanTeamController extends Controller
 {
-    public function editProfile($id)
+    public function cetak($user_id)
     {
-        $profile = Admin::find($id);
-        return view('admins.profiles.edit')->with('profile', $profile);
-    }
-
-    public function updateProfile(Request $request,$id)
-    {
-        $profile = Admin::find($id);
-        $profile->nama = $request->input('nama');
-        $profile->email = $request->input('email');
-        $profile->password = $request->input('password');
-        $profile->update();
-
-        Session::put('message', 'Succes, Data Berhasil Diperbaharui');
-        return redirect()->back();
+        $monev = Monev::find($user_id);
+        $tanggal = Carbon::now()->toDateString();
+        $jenjang = Jenjang::all();
+        $anggota = Anggota::all();
+        $relawan = Relawan::all();
+        $pdf = PDF::loadView('monev.laporan.cetak_pdf', ['monev' => $monev, 'tanggal' => $tanggal, 'jenjang' => $jenjang, 'anggota' => $anggota, 'relawan' => $relawan]);
+        return $pdf->stream('laporan-team-gbb.pdf');
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +29,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admins.dashboard');
+        return view('monev.laporan.index');
     }
 
     /**

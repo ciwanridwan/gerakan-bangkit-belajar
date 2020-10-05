@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Anggota;
 use App\City;
 use App\District;
+use App\Jenjang;
 use App\Province;
 use App\Relawan;
 use Illuminate\Http\Request;
@@ -39,8 +41,10 @@ class RelawanController extends Controller
      */
     public function create()
     {
+        $jenjang = Jenjang::all();
+        $anggota = Anggota::all();
         $provinces = Province::orderBy('created_at', 'DESC')->get();
-        return view('monev.relawan.create')->with('provinces', $provinces);
+        return view('monev.relawan.create')->with('provinces', $provinces)->with('anggota', $anggota)->with('jenjang', $jenjang);
     }
 
     /**
@@ -53,31 +57,35 @@ class RelawanController extends Controller
     {
         $this->validate($request,
         [
-            'nama' => 'required|string',
-            'jenjang' => 'required|string',
+            'anggota_id' => 'required|exists:anggotas,id',
+            'jenjang_id' => 'required|exists:jenjangs,id',
             'follow_ig' => 'required|string',
             'subscribe_youtube' => 'required|string',
-            'province_id' => 'required|exists:provinces,id',
-            'city_id' => 'required|exists:cities,id',
-            'district_id' => 'required|exists:districts,id',
-            'kelurahan' => 'required|string',
-            'jumlah_sanggar' => 'required|string',
-            'jumlah_pelajar' => 'required|string',
-            'zona_covid' => 'required|string',
+            'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
+            'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
+            'district_id' => 'nullable|exists:districts,id',
+            'kelurahan' => 'nullable|string',
+            'nama_teknisi' => 'required|string',
+            'nama_aktivis' => 'required|string',
+            'email' => 'required|email',
+            'instagram' => 'required|string',
+            'nomor_hp' => 'required',
         ]);
 
         $relawan = new Relawan();
-        $relawan->nama = $request->input('nama');
-        $relawan->jenjang = $request->input('jenjang');
+        $relawan->anggota_id = $request->input('anggota_id');
+        $relawan->jenjang_id = $request->input('jenjang_id');
         $relawan->follow_ig = $request->input('follow_ig');
         $relawan->subscribe_youtube = $request->input('subscribe_youtube');
         $relawan->province_id = $request->input('province_id');
         $relawan->city_id = $request->input('city_id');
         $relawan->district_id = $request->input('district_id');
         $relawan->kelurahan = $request->input('kelurahan');
-        $relawan->jumlah_sanggar = $request->input('jumlah_sanggar');
-        $relawan->jumlah_pelajar = $request->input('jumlah_pelajar');
-        $relawan->zona_covid = $request->input('zona_covid');
+        $relawan->nama_teknisi = $request->input('nama_teknisi');
+        $relawan->nama_aktivis = $request->input('nama_aktivis');
+        $relawan->email = $request->input('email');
+        $relawan->instagram = $request->input('instagram');
+        $relawan->nomor_hp = $request->input('nomor_hp');
         $relawan->save();
 
         Session::put('message', 'Data Relawan Berhasil Diinput');

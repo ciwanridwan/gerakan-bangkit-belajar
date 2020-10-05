@@ -15,17 +15,19 @@ class CreateRelawansTable extends Migration
     {
         Schema::create('relawans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('jenjang');
+            $table->foreignId('anggota_id');
+            $table->foreignId('jenjang_id');
             $table->string('follow_ig');
             $table->string('subscribe_youtube');
-            $table->foreignId('province_id');
-            $table->foreignId('city_id');
-            $table->foreignId('district_id');
-            $table->string('kelurahan');
-            $table->string('jumlah_sanggar');
-            $table->string('jumlah_pelajar');
-            $table->string('zona_covid');
+            $table->foreignId('province_id')->nullable();
+            $table->foreignId('city_id')->nullable();
+            $table->foreignId('district_id')->nullable();
+            $table->string('kelurahan')->nullable();
+            $table->string('nama_teknisi');
+            $table->string('nama_aktivis');
+            $table->string('email');
+            $table->string('instagram');
+            $table->string('nomor_hp');
             $table->timestamps();
         });
     }

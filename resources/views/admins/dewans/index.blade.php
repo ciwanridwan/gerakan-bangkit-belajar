@@ -10,16 +10,28 @@ Data Anggota Dewan
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        <p>
+                            {{Session::get('success')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </p>
+
+                        {{Session::put('success', null)}}
+                    </div>
+                    @endif
                     <h4 class="card-title">Data Anggota Dewan</h4>
                     <a href="{{route('create-anggota-dewan')}}" class="btn btn-success mr-2">Tambah</a>
                     {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Nama</th>
-                                <th>Dapil</th>
-                                <th>Kode</th>
+                                <th>Jenjang</th>
+                                <th>Daerah</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -29,19 +41,44 @@ Data Anggota Dewan
                             @endphp
                             @forelse ($anggotaDewan as $item)
                             <tr>
-                                <td>{{$item->id}}</td>
+                                <td>{{$nomor}}</td>
                                 <td>{{$item->nama}}</td>
-                                <td>{{$item->dapil}}</td>
-                                <td>{{$item->kode}}</td>
-                                <td><a href="{{route('edit-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
+
+                                @foreach ($jenjang as $p)
+                                @if ($p->id == $item->jenjang_id)
+                                    <td>{{$p->nama}}</td>
+                                @endif
+                                @endforeach
+
+                                @if ($item->jenjang_id == 2)
+                                @foreach ($province as $provinsi)
+                                    @if ($provinsi->id == $item->province_id)
+                                    <td> {{$provinsi->name}}</td>        
+                                    @endif    
+                                @endforeach
+
+                                @elseif ($item->jenjang_id == 3)
+                                @foreach ($city as $cities)
+                                    @if ($cities->id == $item->city_id)
+                                    <td> {{$cities->name}}</td>        
+                                    @endif    
+                                @endforeach
+                                
+                                @else
+                                <td>0</td>
+                                @endif
+                                <td><a href="{{route('edit-dewan', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>
-                                    <form action="{{route('delete-relawan', $item->id)}}" method="POST">
+                                    <form action="{{route('delete-dewan', $item->id)}}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                            $nomor = $nomor + 1;
+                            @endphp
                             @empty
                             <tr>
                                 <td colspan="3">Tidak Ada Data</td>
@@ -52,6 +89,7 @@ Data Anggota Dewan
                                 </td> --}}
                         </tbody>
                     </table>
+                    {{$anggotaDewan->links()}}
                 </div>
             </div>
         </div>

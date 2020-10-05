@@ -54,22 +54,7 @@
         </ul>
       </div>
     </li>
-
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#sanggar" aria-expanded="false" aria-controls="ui-basic">
-        <i class="menu-icon typcn typcn-coffee"></i>
-        <span class="menu-title">Data Sanggar</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="sanggar">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('index-sanggar')}}">Table Sanggar</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-
+    
     <li class="nav-item">
       <a class="nav-link" href="{{ route('table-berita-admin')}}">
         <i class="menu-icon typcn typcn-document-text"></i>
@@ -81,6 +66,13 @@
       <a class="nav-link" href="{{ route('table-about')}}">
         <i class="menu-icon typcn typcn-document-text"></i>
         <span class="menu-title">Tentang GBB</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('laporan-admin')}}">
+        <i class="menu-icon typcn typcn-document-text"></i>
+        <span class="menu-title">Laporan</span>
       </a>
     </li>
   </ul>
