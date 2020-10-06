@@ -102,6 +102,7 @@ Route::group(['prefix' => 'gbb'], function () {
                 Route::post('/store', 'Admin\DataRelawanController@storeAccount')->name('store-account-relawan');
                 Route::get('/edit/{id}', 'Admin\DataRelawanController@editAccount')->name('edit-account-relawan');
                 Route::post('/update/{id}', 'Admin\DataRelawanController@updateAccount')->name('update-account-relawan');
+                Route::post('/update/password/{id}', 'Admin\DataRelawanController@updatePassword')->name('update-password-account');
                 Route::post('/delete/{id}', 'Admin\DataRelawanController@deleteAccount')->name('delete-account-relawan');
             });
 

@@ -91,19 +91,27 @@ class DataRelawanController extends Controller
         return view('admins.account.edit')->with('akun', $akun);
     }
 
-    public function updateAccount(Request $request, $id)
+    public function updatePassword(Request $request, $id)
     {
-        // $this->validate($request,
-        // [
-        //     'password' => 'min:8|confirmed'
-        // ]);
+        $this->validate($request,
+        [
+            'password' => 'min:8|confirmed'
+        ]);
         $update = User::find($id);
-        $update->name = $request->input('name');
-        $update->email = $request->input('email');
         $update->password = $request->input('password');
-        $update->remember_token = Str::random(16);
+        $update->remember_token = Str::random(16); 
         $update->update();
 
+        Session::put('success', 'Password Berhasil Diperbaharui');
+        return redirect()->back();
+    }
+
+    public function updateAccount(Request $request, $id)
+    {
+        $update = User::find($id);
+        $update->name = $request->input('name');
+        $update->email = $request->input('email');   
+        $update->update();
         Session::put('success', 'Data Berhasil Diperbaharui');
         return redirect()->back();
     }
