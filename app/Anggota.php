@@ -8,7 +8,7 @@ class Anggota extends Model
 {
     public function jenjangs()
     {
-        return $this->belongsTo('App\Jenjang');
+        return $this->belongsToMany('App\Jenjang');
     }
 
     public function provinces()

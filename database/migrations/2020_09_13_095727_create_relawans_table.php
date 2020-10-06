@@ -22,7 +22,7 @@ class CreateRelawansTable extends Migration
             $table->foreignId('province_id')->nullable();
             $table->foreignId('city_id')->nullable();
             $table->foreignId('district_id')->nullable();
-            $table->string('kelurahan')->nullable();
+            $table->foreignId('village_id')->nullable();
             $table->string('nama_teknisi');
             $table->string('nama_aktivis');
             $table->string('email');

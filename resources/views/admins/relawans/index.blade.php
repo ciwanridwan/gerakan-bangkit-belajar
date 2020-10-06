@@ -54,11 +54,24 @@ Data Relawan
                                 @endforeach
 
                                 @if ($item->jenjang_id == 1)
-                                <td>0</td>
+                                <td>-</td>
+                                
                                 @elseif ($item->jenjang_id == 2)
-                                <td>{{$item->province_id}}</td>
+                                @foreach ($provinces as $p)
+
+                                @if ($p->id == $item->province_id)
+                                <td>{{$p->name}}</td>        
+                                @endif
+
+                                @endforeach
                                 @else
-                                <td>{{$item->city_id}}</td>
+
+                                @foreach ($city as $c)
+                                @if ($item->city_id == $c->id)
+                                <td>{{$c->name}}</td>    
+                                @endif
+                                    
+                                @endforeach
                                 @endif
                                 <td><a href="{{route('edit-data-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>

@@ -27,7 +27,7 @@ Edit Relawan
             @method('POST')
             <div class="form-group">
               <label for="jenjang_id">Jenjang Relawan</label>
-              <select class="form-control" id="jenjang_id" name="jenjang_id">
+              <select class="form-control" id="jenjang_id" name="jenjang_id" required>
                 <option value="">Pilih Jenjang</option>
                 @foreach ($jenjang as $item)
                 <option value="{{$item->id}}">{{$item->nama}}</option>
@@ -55,15 +55,26 @@ Edit Relawan
               <p class="text-danger">{{ $errors->first('city_id') }}</p>
             </div>
 
+           
             <div class="form-group">
-              <label for="kelurahan">Kelurahan / Desa</label>
-              <input type="text" class="form-control" id="kelurahan" placeholder="Kelurahan / Desa" name="kelurahan">
-              <p class="text-danger">{{ $errors->first('kelurahan') }}</p>
+              <label for="district_id">Kecamatan</label>
+              <select class="form-control" id="district_id" name="district_id">
+                <option value="">Pilih Kecamatan</option>
+              </select>
+              <p class="text-danger">{{ $errors->first('district_id') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="village_id">Kelurahan / Desa</label>
+              <select class="form-control" id="village_id" name="village_id">
+                <option value="">Pilih Kelurahan / Desa</option>
+              </select>
+                <p class="text-danger">{{ $errors->first('village_id') }}</p>
             </div>
 
             <div class="form-group">
               <label for="anggota_id">Nama Anggota</label>
-              <select class="form-control" id="anggota_id" name="anggota_id">
+              <select class="form-control" id="anggota_id" name="anggota_id" required>
                 <option value="">Pilih Anggota</option>
                 @foreach ($anggota as $item)
                 <option value="{{$item->id}}">{{$item->nama}}</option>
@@ -207,6 +218,21 @@ Edit Relawan
                     $('#district_id').append('<option value="">Pilih Kecamatan</option>')
                     $.each(html.data, function(key, item) {
                         $('#district_id').append('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                }
+            });
+        })
+
+        $('#district_id').on('change', function() {
+            $.ajax({
+                url: "{{ url('/api/village') }}",
+                type: "GET",
+                data: { district_id: $(this).val() },
+                success: function(html){
+                    $('#village_id').empty()
+                    $('#village_id').append('<option value="">Pilih Kelurahan / Desa</option>')
+                    $.each(html.data, function(key, item) {
+                        $('#village_id').append('<option value="'+item.id+'">'+item.name+'</option>')
                     })
                 }
             });

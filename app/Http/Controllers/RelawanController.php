@@ -8,6 +8,7 @@ use App\District;
 use App\Jenjang;
 use App\Province;
 use App\Relawan;
+use App\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -23,6 +24,12 @@ class RelawanController extends Controller
     {
         $districts = District::where('city_id', request()->city_id)->get();
         return response()->json(['status' => 'success', 'data' => $districts]);
+    }
+
+    public function getVillage()
+    {
+        $village = Village::where('district_id', request()->district_id)->get();
+        return response()->json(['status' => 'success', 'data' => $village]);
     }
     /**
      * Display a listing of the resource.
@@ -43,7 +50,7 @@ class RelawanController extends Controller
     {
         $jenjang = Jenjang::all();
         $anggota = Anggota::all();
-        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $provinces = Province::all();
         return view('monev.relawan.create')->with('provinces', $provinces)->with('anggota', $anggota)->with('jenjang', $jenjang);
     }
 
@@ -64,7 +71,7 @@ class RelawanController extends Controller
             'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
             'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
             'district_id' => 'nullable|exists:districts,id',
-            'kelurahan' => 'nullable|string',
+            'village_id' => 'nullable|exists:villages,id',
             'nama_teknisi' => 'required|string',
             'nama_aktivis' => 'required|string',
             'email' => 'required|email',
@@ -80,7 +87,7 @@ class RelawanController extends Controller
         $relawan->province_id = $request->input('province_id');
         $relawan->city_id = $request->input('city_id');
         $relawan->district_id = $request->input('district_id');
-        $relawan->kelurahan = $request->input('kelurahan');
+        $relawan->village_id = $request->input('village_id');
         $relawan->nama_teknisi = $request->input('nama_teknisi');
         $relawan->nama_aktivis = $request->input('nama_aktivis');
         $relawan->email = $request->input('email');

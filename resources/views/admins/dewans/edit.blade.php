@@ -25,7 +25,7 @@ Edit Anggota Dewan
 
                         <div class="form-group">
                             <label for="jenjang_id">Jenjang Relawan</label>
-                            <select class="form-control" id="jenjang_id" name="jenjang_id">
+                            <select class="form-control" id="jenjang_id" name="jenjang_id" required>
                                 <option value="">Pilih Jenjang</option>
                                 @foreach ($jenjang as $item)
                                 <option value="{{$item->id}}">{{$item->nama}}</option>
@@ -111,6 +111,21 @@ Edit Anggota Dewan
                     $('#district_id').append('<option value="">Pilih Kecamatan</option>')
                     $.each(html.data, function(key, item) {
                         $('#district_id').append('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                }
+            });
+        })
+
+        $('#district_id').on('change', function() {
+            $.ajax({
+                url: "{{ url('/api/village') }}",
+                type: "GET",
+                data: { district_id: $(this).val() },
+                success: function(html){
+                    $('#village_id').empty()
+                    $('#village_id').append('<option value="">Pilih Kelurahan / Desa</option>')
+                    $.each(html.data, function(key, item) {
+                        $('#village_id').append('<option value="'+item.id+'">'+item.name+'</option>')
                     })
                 }
             });

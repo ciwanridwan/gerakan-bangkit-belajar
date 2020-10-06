@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Anggota;
+use App\City;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Jenjang;
@@ -92,10 +93,10 @@ class DataRelawanController extends Controller
 
     public function updateAccount(Request $request, $id)
     {
-        $this->validate($request,
-        [
-            'password' => 'string|min:8|confirmed'
-        ]);
+        // $this->validate($request,
+        // [
+        //     'password' => 'min:8|confirmed'
+        // ]);
         $update = User::find($id);
         $update->name = $request->input('name');
         $update->email = $request->input('email');
@@ -139,7 +140,9 @@ class DataRelawanController extends Controller
         $relawan = Relawan::all();
         $anggota = Anggota::all();
         $jenjang = Jenjang::all();
-        return view('admins.relawans.index', compact('anggota', 'jenjang', 'relawan'));
+        $provinces = Province::all();
+        $city = City::all();
+        return view('admins.relawans.index', compact('anggota', 'jenjang', 'relawan', 'city', 'provinces'));
     }
 
     /**
@@ -149,7 +152,7 @@ class DataRelawanController extends Controller
      */
     public function create()
     {
-        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $provinces = Province::all();
         $jenjang = Jenjang::all();
         $anggota = Anggota::all();
         return view('admins.relawans.create')->with('provinces', $provinces)->with('jenjang', $jenjang)->with('anggota', $anggota);
@@ -172,7 +175,7 @@ class DataRelawanController extends Controller
             'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
             'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
             'district_id' => 'nullable|exists:districts,id',
-            'kelurahan' => 'nullable|string',
+            'village_id' => 'nullable|exists:villages,id',
             'nama_teknisi' => 'required|string',
             'nama_aktivis' => 'required|string',
             'email' => 'required|email',
@@ -188,7 +191,7 @@ class DataRelawanController extends Controller
         $relawan->province_id = $request->input('province_id');
         $relawan->city_id = $request->input('city_id');
         $relawan->district_id = $request->input('district_id');
-        $relawan->kelurahan = $request->input('kelurahan');
+        $relawan->village_id = $request->input('village_id');
         $relawan->nama_teknisi = $request->input('nama_teknisi');
         $relawan->nama_aktivis = $request->input('nama_aktivis');
         $relawan->email = $request->input('email');
@@ -220,7 +223,7 @@ class DataRelawanController extends Controller
     public function edit($id)
     {
         $editRelawan = Relawan::find($id);
-        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $provinces = Province::all();
         $jenjang = Jenjang::all();
         $anggota = Anggota::all();
         return view('admins.relawans.edit')->with('provinces', $provinces)->with('jenjang', $jenjang)->with('anggota', $anggota)->with('editRelawan', $editRelawan);
@@ -241,7 +244,7 @@ class DataRelawanController extends Controller
             'province_id' => 'nullable|required_if:jenjang_id,2|exists:provinces,id',
             'city_id' => 'nullable|required_if:jenjang_id,3|exists:cities,id',
             'district_id' => 'nullable|exists:districts,id',
-            'kelurahan' => 'nullable|string',
+            'village_id' => 'nullable|exists:villages,id',
         ]);
 
         $relawan = Relawan::find($id);
@@ -252,7 +255,7 @@ class DataRelawanController extends Controller
         $relawan->province_id = $request->input('province_id');
         $relawan->city_id = $request->input('city_id');
         $relawan->district_id = $request->input('district_id');
-        $relawan->kelurahan = $request->input('kelurahan');
+        $relawan->village_id = $request->input('village_id');
         $relawan->nama_teknisi = $request->input('nama_teknisi');
         $relawan->nama_aktivis = $request->input('nama_aktivis');
         $relawan->email = $request->input('email');

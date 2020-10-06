@@ -27,6 +27,7 @@ Route::get('/about', 'AboutController@index')->name('about');
 // API KOTA DAN KECAMATAN
 Route::get('/api/city/', 'RelawanController@getCity');
 Route::get('/api/district/', 'RelawanController@getDistrict');
+Route::get('/api/village/', 'RelawanController@getVillage');
 
 
 // ADMIN 
@@ -43,9 +44,11 @@ Route::group(['prefix' => 'gbb'], function () {
         Route::get('logout', 'Admin\LoginController@logout')->name('logout-admin');
 
         // Laporan 
-        Route::group(['prefix' => 'laporan'], function (){
-            Route::get('laporan-admin', 'Admin\LaporanAdminController@index')->name('laporan-admin');
-            Route::get('laporan/cetak-pdf', 'Admin\LaporanAdminController@cetak')->name('cetak-laporan-admin');
+        Route::group(['prefix' => 'laporan'], function () {
+            Route::get('admin', 'Admin\LaporanAdminController@index')->name('laporan-admin');
+            Route::post('hasil', 'Admin\LaporanAdminController@hasil')->name('index-hasil-laporan');
+            Route::get('cetak-pdf/{id}', 'Admin\LaporanAdminController@cetak')->name('cetak-laporan-admin');
+
         });
 
         // About
@@ -137,21 +140,14 @@ Route::group(['prefix' => 'berita'], function () {
 Route::group(['prefix' => 'relawan', 'middleware' => 'auth'], function () {
     Route::get('/create', 'RelawanController@create')->name('create-relawan');
     Route::post('/store', 'RelawanController@store')->name('store-relawan');
+    Route::get('sanggar/create', 'SanggarController@create')->name('create-sanggar-user');
+    Route::post('sanggar/store', 'SanggarController@store')->name('store-sanggar-user');
 });
 
-Route::group(['prefix' => 'fasilitas', 'middleware' => 'auth'], function () {
-    Route::get('/create', 'FasilitasController@create')->name('create-fasilitas');
-    Route::post('/store', 'FasilitasController@store')->name('store-fasilitas');
-});
-
-Route::group(['prefix' => 'identitas-relawan', 'middleware' => 'auth'], function () {
-    Route::get('/create', 'IdentitasRelawanController@create')->name('create-identitas');
-    Route::post('/store', 'IdentitasRelawanController@store')->name('store-identitas');
-});
-
-Route::group(['prefix' => 'laporan'], function (){
-    Route::get('/index', 'LaporanTeamController@index')->name('laporan-team');
-    Route::get('monev/create', 'MonevController@create')->name('create-laporan');
-    Route::post('store/create', 'MonevController@store')->name('store-laporan');
-    Route::get('monev/cetak/{user_id}', 'LaporanTeamController@cetak')->name('cetak-monev-team');
+Route::group(['prefix' => 'laporan'], function () {
+    Route::get('/monev/create', 'MonevController@create')->name('create-monev');
+    Route::post('/monev/store', 'MonevController@store')->name('store-monev');
+    Route::get('/index', 'LaporanTeamController@index')->name('laporan');
+    Route::post('/hasil', 'LaporanTeamController@hasil')->name('hasil-laporan');
+    Route::get('/export/{id}', 'LaporanTeamController@export')->name('laporan-export');
 });

@@ -32,13 +32,19 @@
               <a class="nav-link" href="{{ route('create-relawan')}}">Relawan</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('laporan-team')}}">Laporan</a>
+              <a class="nav-link" href="{{ route('create-sanggar-user')}}">Sanggar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('create-laporan')}}">Monev</a>
+              <a class="nav-link" href="{{ route('create-monev')}}">Monev</a>
             </li>
           </ul>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('laporan')}}">
+          <i class="menu-icon typcn typcn-document-text"></i>
+          <span class="menu-title">Laporan</span>
+        </a>
       </li>
 
       <li class="nav-item">

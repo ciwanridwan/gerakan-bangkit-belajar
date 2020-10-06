@@ -9,9 +9,41 @@ use App\Relawan;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LaporanTeamController extends Controller
 {
+    public function export($bulanTahun)
+    {
+        $tanggal = Carbon::now()->toDateString();
+		$pecah = explode("-", $bulanTahun);
+		$tahun = $pecah[0];
+        $bulan = $pecah[1];
+        $day = $pecah[2];
+		$id_users = Auth::user()->id;
+		$laporan = DB::table('monevs')->select('monevs.*', 'anggotas.nama as nama_anggota', 'jenjangs.nama as nama_jenjang', 'relawans.*', 'villages.name as nama_desa', 'districts.name as nama_kecamatan', 'cities.name as nama_kabupaten', 'provinces.name as nama_provinsi')->join('anggotas', 'anggota_id', '=', 'anggotas.id')->join('jenjangs', 'anggotas.jenjang_id', '=', 'jenjangs.id')->join('relawans', 'anggotas.id', '=', 'relawans.anggota_id')->join('villages', 'relawans.village_id', '=', 'villages.id')->join('districts', 'relawans.district_id', '=', 'districts.id')->join('cities', 'relawans.city_id', '=', 'cities.id')->join('provinces', 'relawans.province_id', '=', 'provinces.id')->where('monevs.user_id', '=', $id_users)->whereYear('monevs.created_at', '=', $tahun)->whereMonth('monevs.created_at', '=', $bulan)->first();
+		$pdf = PDF::loadview('monev.laporan.cetak_pdf', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'tanggal' => $tanggal, 'day' => $day]);
+    	return $pdf->stream('laporan-team.pdf');
+    }
+
+    public function hasil(Request $request)
+    {
+		$this->validate($request, 
+        [
+            'bulan_tahun' => 'required',
+        ]);
+        $bulan_tahun = $request->input('bulan_tahun');
+		$pecah = explode("-", $bulan_tahun);
+        $tahun = $pecah[0];
+        $bulan = $pecah[1];
+        $day = $pecah[2];
+		$id_users = Auth::user()->id;
+        $laporan = DB::table('monevs')->select('monevs.*', 'anggotas.nama as nama_anggota', 'jenjangs.nama as nama_jenjang', 'relawans.*', 'villages.name as nama_desa', 'districts.name as nama_kecamatan', 'cities.name as nama_kabupaten', 'provinces.name as nama_provinsi')->join('anggotas', 'anggota_id', '=', 'anggotas.id')->join('jenjangs', 'anggotas.jenjang_id', '=', 'jenjangs.id')->join('relawans', 'anggotas.id', '=', 'relawans.anggota_id')->join('villages', 'relawans.village_id', '=', 'villages.id')->join('districts', 'relawans.district_id', '=', 'districts.id')->join('cities', 'relawans.city_id', '=', 'cities.id')->join('provinces', 'relawans.province_id', '=', 'provinces.id')->where('monevs.user_id', '=', $id_users)->whereYear('monevs.created_at', '=', $tahun)->whereMonth('monevs.created_at', '=', $bulan)->first();
+        // dd($day);
+		return view('monev.laporan.hasil-laporan', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'bulanTahun' => $bulan_tahun, 'day' => $day])->with('i');
+    }
+
     public function cetak($user_id)
     {
         $monev = Monev::find($user_id);

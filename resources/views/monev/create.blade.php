@@ -22,7 +22,7 @@ Monev
                     @endif
                     <h4 class="card-title">Monev</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('store-laporan')}}" method="POST"
+                    <form class="forms-sample" action="{{route('store-monev')}}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('POST')

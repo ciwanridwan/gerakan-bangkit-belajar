@@ -1,66 +1,84 @@
 @extends('layouts.admin')
 
 @section('title')
-Laporan
+Laporan Admin
 @endsection
 
 @section('content')
 <div class="content-wrapper">
     <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
+                    @if (Session::has('message'))
+                    <div class="alert alert-success">
+                        <p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{Session::get('message')}}
+                        </p>
+                        {{Session::put('message', null)}}
+                    </div>
+                    @endif
+
+                     @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
                     <h4 class="card-title">Laporan</h4>
-                    <a href="#" class="btn btn-success mr-2">Download</a>
-                    {{-- <p class="card-description"> Add class <code>.table</code> </p> --}}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Jumlah Anggota</th>
-                                <th>Jumlah Perprovinsi</th>
-                                <th>Jumlah Berita</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $nomor = 1;
-                            @endphp
-                            {{-- @forelse ($relawan as $item)
-                            <tr>
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->nama}}</td>
-                                <td>{{$item->jenjang}}</td>
-                                @if ($item->jenjang == 'DPR RI')
-                                <td>0</td>
-                                @elseif ($item->jenjang == 'DPRD PROVINSI')
-                                <td>{{$item->province_id}}</td>
-                                @else
-                                <td>{{$item->city_id}}</td>
-                                @endif
-                                <td><a href="{{route('edit-relawan', $item->id)}}" class="btn btn-info">Edit</a></td>
-                                <td>
-                                    <form action="{{route('delete-relawan', $item->id)}}" method="POST">
-                                        @csrf
-                                        @method('POST')
-                                        <button class="btn btn-danger">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3">Tidak Ada Data</td>
-                            </tr>
-                            @endforelse --}}
-                            {{-- <td>
-                                    <label class="badge badge-danger">Pending</label>
-                                </td> --}}
-                        </tbody>
-                    </table>
+                    {{-- <p class="card-description"> Basic form elements </p> --}}
+                    <form class="forms-sample" action="{{ route('index-hasil-laporan')}}" method="POST">
+                        @csrf
+                        @method('POST')
+                        <div class="form-group">
+                            <label for="">Bulan</label>
+                            <input type="date" class="form-control" id="datepicker"
+                                placeholder="Input Bulan dan Tahun" name="bulan_tahun" required>
+                            <p class="text-danger">{{ $errors->first('bulan_tahun') }}</p>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    $('#province_id').on('change', function() {
+            $.ajax({
+                url: "{{ url('/api/city') }}",
+                type: "GET",
+                data: { province_id: $(this).val() },
+                success: function(html){
+    
+                    $('#city_id').empty()
+                    $('#city_id').append('<option value="">Pilih Kabupaten/Kota</option>')
+                    $.each(html.data, function(key, item) {
+                        $('#city_id').append('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                }
+            });
+        })
+    
+        $('#city_id').on('change', function() {
+            $.ajax({
+                url: "{{ url('/api/district') }}",
+                type: "GET",
+                data: { city_id: $(this).val() },
+                success: function(html){
+                    $('#district_id').empty()
+                    $('#district_id').append('<option value="">Pilih Kecamatan</option>')
+                    $.each(html.data, function(key, item) {
+                        $('#district_id').append('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                }
+            });
+        })
+</script>
 @endsection

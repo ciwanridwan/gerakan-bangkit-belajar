@@ -70,6 +70,7 @@ Akun
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                         {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
+                    <button class="btn btn-light" onclick="goBack()">Cancel</button>
                 </div>
             </div>
         </div>

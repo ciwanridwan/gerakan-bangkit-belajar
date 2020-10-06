@@ -64,10 +64,11 @@
             </div>
 
             <div class="form-group">
-              <label for="kelurahan">Kelurahan / Desa</label>
-              <input type="text" class="form-control" id="kelurahan" placeholder="Kelurahan / Desa"
-                name="kelurahan">
-                <p class="text-danger">{{ $errors->first('kelurahan') }}</p>
+              <label for="village_id">Kelurahan / Desa</label>
+              <select class="form-control" id="village_id" name="village_id">
+                <option value="">Pilih Kecamatan</option>
+              </select>
+                <p class="text-danger">{{ $errors->first('village_id') }}</p>
             </div>
 
             <div class="form-group">
@@ -184,6 +185,21 @@
                     $('#district_id').append('<option value="">Pilih Kecamatan</option>')
                     $.each(html.data, function(key, item) {
                         $('#district_id').append('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                }
+            });
+        })
+
+        $('#district_id').on('change', function() {
+            $.ajax({
+                url: "{{ url('/api/village') }}",
+                type: "GET",
+                data: { district_id: $(this).val() },
+                success: function(html){
+                    $('#village_id').empty()
+                    $('#village_id').append('<option value="">Pilih Kelurahan / Desa</option>')
+                    $.each(html.data, function(key, item) {
+                        $('#village_id').append('<option value="'+item.id+'">'+item.name+'</option>')
                     })
                 }
             });

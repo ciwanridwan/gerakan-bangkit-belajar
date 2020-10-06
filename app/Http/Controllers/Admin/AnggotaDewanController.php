@@ -35,7 +35,7 @@ class AnggotaDewanController extends Controller
      */
     public function create()
     {
-        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $provinces = Province::all();
         $jenjang = Jenjang::all();
         return view('admins.dewans.create')->with('jenjang', $jenjang)->with('provinces', $provinces);
     }
@@ -108,7 +108,7 @@ class AnggotaDewanController extends Controller
     {
         $edit = Anggota::find($id);
         $jenjang = Jenjang::all();
-        $provinces = Province::orderBy('created_at', 'DESC')->get();
+        $provinces = Province::all();
         return view('admins.dewans.edit')->with('edit', $edit)->with('jenjang', $jenjang)->with('provinces', $provinces);
     }
 
