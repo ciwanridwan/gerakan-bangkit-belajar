@@ -31,6 +31,7 @@ class CreateMonevsTable extends Migration
             $table->string('jumlah_wifi');
             $table->string('jumlah_berita');
             $table->string('jumlah_link_youtube');
+            $table->string('berkas');
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class LandingPageController extends Controller
     public function about()
     {
         $about = About::first();
+        // dd($about);
         return view('index')->with('about', $about);
     }
     public function index()

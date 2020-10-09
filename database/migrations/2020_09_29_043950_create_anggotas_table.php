@@ -20,6 +20,7 @@ class CreateAnggotasTable extends Migration
             $table->foreignId('jenjang_id');
             $table->foreignId('province_id')->nullable();
             $table->foreignId('city_id')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

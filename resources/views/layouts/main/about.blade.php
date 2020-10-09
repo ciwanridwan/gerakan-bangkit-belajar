@@ -19,7 +19,6 @@
         <h2>Gerakan Bangkit Belajar</h2>
         <h3>{{$about->isi}}</h3>
         <p>
-          {{$about->deskripsi}}
         </p>
       </div>
     </div>

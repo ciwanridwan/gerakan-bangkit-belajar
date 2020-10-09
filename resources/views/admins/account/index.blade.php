@@ -52,6 +52,9 @@ Data Relawan
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                            $nomor = $nomor + 1;
+                            @endphp
                             @empty
                             <tr>
                                 <td colspan="3">Tidak Ada Data</td>
@@ -62,6 +65,7 @@ Data Relawan
                                 </td> --}}
                         </tbody>
                     </table>
+                    {{$user->links()}}
                 </div>
             </div>
         </div>

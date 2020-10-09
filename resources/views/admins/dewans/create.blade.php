@@ -22,7 +22,7 @@ Tambah Anggota Dewan
           @endif
           <h4 class="card-title">Input Data Anggota DPR RI</h4>
           {{-- <p class="card-description"> Basic form elements </p> --}}
-          <form class="forms-sample" action="{{route('store-dewan')}}" method="POST">
+          <form class="forms-sample" action="{{route('store-dewan')}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
 
@@ -66,6 +66,12 @@ Tambah Anggota Dewan
               <label for="nama">Nama DPR</label>
               <input type="text" class="form-control" id="nama" placeholder="Nama Relawan" name="nama" required>
               <p class="text-danger">{{ $errors->first('nama') }}</p>
+            </div>
+
+            <div class="form-group">
+              <label for="foto">Upload Foto</label>
+              <input type="file" class="form-control form-control-lg" id="foto" placeholder="foto Relawan" name="foto" required>
+              <p class="text-danger">{{ $errors->first('foto') }}</p>
             </div>
 
             <button type="submit" class="btn btn-success mr-2">Submit</button>

@@ -11,6 +11,7 @@ Fasilitas
             <div class="card">
 				<?php if(!empty($laporan)){ ?>
                 <div class="card-body">
+					<img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 100px; height: auto;">
                     <center><h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR</h4>
 					<h6>Tanggal {{$day}}-{{ $bulan }}-{{ $tahun }}</center></h6><hr />
                     <table width="100%" border="0">
@@ -18,6 +19,9 @@ Fasilitas
 							<td width="30%">Jenjang</td>
 							<td width="2%">:</td>
 							<td width="68%"><?= $laporan->nama_jenjang; ?></td>
+							@foreach ($anggota as $item)
+							<td><img src="{{asset('storage/photos/'. $item->foto )}}" alt="" style="height: auto; width: 100px; border-radius: 50%"></td>	
+							@endforeach
 						</tr>
 						<tr>
 							<td>Nama DPR</td>

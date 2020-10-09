@@ -155,6 +155,12 @@ Monev
                             <p class="text-danger">{{ $errors->first('jumlah_link_youtube') }}</p>
                         </div>
 
+                        <div class="form-group">
+                            <label for="berkas">File</label>
+                            <input type="file" class="form-control form-control-lg" id="berkas"
+                                placeholder="" name="berkas" required>
+                            <p class="text-danger">{{ $errors->first('berkas') }}</p>
+                        </div>
 
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                     </form>

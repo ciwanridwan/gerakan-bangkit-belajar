@@ -19,7 +19,7 @@ Edit Anggota Dewan
                     @endif
                     <h4 class="card-title">Edit Data Anggota DPR RI</h4>
                     {{-- <p class="card-description"> Basic form elements </p> --}}
-                    <form class="forms-sample" action="{{route('update-dewan', $edit->id)}}" method="POST">
+                    <form class="forms-sample" action="{{route('update-dewan', $edit->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
 
@@ -63,6 +63,17 @@ Edit Anggota Dewan
                             <label for="nama">Nama DPR</label>
                             <input type="text" class="form-control" id="nama" placeholder="Nama Relawan" name="nama" value="{{$edit->nama}}">
                             <p class="text-danger">{{ $errors->first('nama') }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foto">Foto DPR</label>
+                            @if ($edit->foto != null)
+                            <img src="{{asset('/storage/photos/'. $edit->foto)}}" alt="{{$edit->nama}}" style="width: 20%; height: auto; border-radius: 50%">
+                            <input type="file" class="form-control form-control-lg" id="foto" placeholder="foto Relawan" name="foto" value="{{$edit->foto}}">
+                            @else 
+                            <input type="file" class="form-control form-control-lg" id="foto" placeholder="foto Relawan" name="foto" value="{{$edit->foto}}">
+                            @endif
+                            <p class="text-danger">{{ $errors->first('foto') }}</p>
                         </div>
 
                         <button type="submit" class="btn btn-success mr-2">Submit</button>

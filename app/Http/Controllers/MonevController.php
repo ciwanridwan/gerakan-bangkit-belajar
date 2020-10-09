@@ -58,6 +58,7 @@ class MonevController extends Controller
             'jumlah_wifi' => 'required',
             'jumlah_berita' => 'required',
             'jumlah_link_youtube' => 'required',
+            'berkas' => 'nullable|mimes:pdf,doc,docx',
         ]);
 
         if ($request->hasFile('foto_gadget')) {
@@ -90,6 +91,16 @@ class MonevController extends Controller
             $wifi = 'noimage.jpg';
         }
 
+        if ($request->hasFile('berkas')) {
+            $fileNameWithExtension = $request->file('berkas')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('berkas')->getClientOriginalExtension();
+            $berkas = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('berkas')->storeAs('public/monevs/files', $berkas);
+        } else {
+            $berkas = 'nofile.pdf';
+        }
+
         $monev = new Monev();
         $monev->user_id = $request->input('user_id');
         $monev->anggota_id = $request->input('anggota_id');
@@ -107,6 +118,7 @@ class MonevController extends Controller
         $monev->jumlah_wifi = $request->input('jumlah_wifi');
         $monev->jumlah_berita = $request->input('jumlah_berita');
         $monev->jumlah_link_youtube = $request->input('jumlah_link_youtube');
+        $monev->berkas = $berkas;
         $monev->save();
 
         Session::put('message', 'Monev Berhasil Diinput');

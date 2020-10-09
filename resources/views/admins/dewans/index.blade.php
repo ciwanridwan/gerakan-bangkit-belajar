@@ -65,7 +65,7 @@ Data Anggota Dewan
                                 @endforeach
                                 
                                 @else
-                                <td>0</td>
+                                <td>-</td>
                                 @endif
                                 <td><a href="{{route('edit-dewan', $item->id)}}" class="btn btn-info">Edit</a></td>
                                 <td>

@@ -95,6 +95,7 @@ Data Relawan
                                 </td> --}}
                         </tbody>
                     </table>
+                    {{$relawan->links()}}
                 </div>
             </div>
         </div>

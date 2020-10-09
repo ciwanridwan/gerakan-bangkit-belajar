@@ -22,8 +22,9 @@ class LaporanTeamController extends Controller
         $bulan = $pecah[1];
         $day = $pecah[2];
 		$id_users = Auth::user()->id;
-		$laporan = DB::table('monevs')->select('monevs.*', 'anggotas.nama as nama_anggota', 'jenjangs.nama as nama_jenjang', 'relawans.*', 'villages.name as nama_desa', 'districts.name as nama_kecamatan', 'cities.name as nama_kabupaten', 'provinces.name as nama_provinsi')->join('anggotas', 'anggota_id', '=', 'anggotas.id')->join('jenjangs', 'anggotas.jenjang_id', '=', 'jenjangs.id')->join('relawans', 'anggotas.id', '=', 'relawans.anggota_id')->join('villages', 'relawans.village_id', '=', 'villages.id')->join('districts', 'relawans.district_id', '=', 'districts.id')->join('cities', 'relawans.city_id', '=', 'cities.id')->join('provinces', 'relawans.province_id', '=', 'provinces.id')->where('monevs.user_id', '=', $id_users)->whereYear('monevs.created_at', '=', $tahun)->whereMonth('monevs.created_at', '=', $bulan)->first();
-		$pdf = PDF::loadview('monev.laporan.cetak_pdf', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'tanggal' => $tanggal, 'day' => $day]);
+        $laporan = DB::table('monevs')->select('monevs.*', 'anggotas.nama as nama_anggota', 'jenjangs.nama as nama_jenjang', 'relawans.*', 'villages.name as nama_desa', 'districts.name as nama_kecamatan', 'cities.name as nama_kabupaten', 'provinces.name as nama_provinsi')->join('anggotas', 'anggota_id', '=', 'anggotas.id')->join('jenjangs', 'anggotas.jenjang_id', '=', 'jenjangs.id')->join('relawans', 'anggotas.id', '=', 'relawans.anggota_id')->join('villages', 'relawans.village_id', '=', 'villages.id')->join('districts', 'relawans.district_id', '=', 'districts.id')->join('cities', 'relawans.city_id', '=', 'cities.id')->join('provinces', 'relawans.province_id', '=', 'provinces.id')->where('monevs.user_id', '=', $id_users)->whereYear('monevs.created_at', '=', $tahun)->whereMonth('monevs.created_at', '=', $bulan)->first();
+        $anggota = Anggota::where('id', $laporan->anggota_id)->get();
+		$pdf = PDF::loadview('monev.laporan.cetak_pdf', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'tanggal' => $tanggal, 'day' => $day, 'anggota' => $anggota]);
     	return $pdf->stream('laporan-team.pdf');
     }
 
@@ -40,8 +41,9 @@ class LaporanTeamController extends Controller
         $day = $pecah[2];
 		$id_users = Auth::user()->id;
         $laporan = DB::table('monevs')->select('monevs.*', 'anggotas.nama as nama_anggota', 'jenjangs.nama as nama_jenjang', 'relawans.*', 'villages.name as nama_desa', 'districts.name as nama_kecamatan', 'cities.name as nama_kabupaten', 'provinces.name as nama_provinsi')->join('anggotas', 'anggota_id', '=', 'anggotas.id')->join('jenjangs', 'anggotas.jenjang_id', '=', 'jenjangs.id')->join('relawans', 'anggotas.id', '=', 'relawans.anggota_id')->join('villages', 'relawans.village_id', '=', 'villages.id')->join('districts', 'relawans.district_id', '=', 'districts.id')->join('cities', 'relawans.city_id', '=', 'cities.id')->join('provinces', 'relawans.province_id', '=', 'provinces.id')->where('monevs.user_id', '=', $id_users)->whereYear('monevs.created_at', '=', $tahun)->whereMonth('monevs.created_at', '=', $bulan)->first();
-        // dd($day);
-		return view('monev.laporan.hasil-laporan', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'bulanTahun' => $bulan_tahun, 'day' => $day])->with('i');
+        $anggota = Anggota::where('id', $laporan->anggota_id)->get();
+        // dd($anggota);
+		return view('monev.laporan.hasil-laporan', ['laporan' => $laporan, 'bulan' => $bulan, 'tahun' => $tahun, 'bulanTahun' => $bulan_tahun, 'day' => $day, 'anggota' => $anggota])->with('i');
     }
 
     public function cetak($user_id)

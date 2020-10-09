@@ -30,12 +30,12 @@ class BeritaController extends Controller
     }
     public function table()
     {
-        $berita = Berita::paginate(10);
+        $berita = Berita::orderBy('created_at', 'desc')->paginate(15);
         return view('admins.berita.table')->with('berita', $berita);
     }
     public function index()
     {
-        $berita = Berita::all();
+        $berita = Berita::orderBy('created_at', 'desc')->get();
         return view('berita.index')->with('berita', $berita);
     }
 

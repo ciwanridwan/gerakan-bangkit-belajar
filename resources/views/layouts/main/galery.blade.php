@@ -19,8 +19,8 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="gallery-item wow fadeInUp">
-          <a href="{{ asset('assets/img/DPC-PKB.jpeg')}}" data-gall="portfolioGallery" class="venobox">
-            <img src="{{ asset('assets/img/DPC-PKB.jpeg')}}" alt="">
+          <a href="{{ asset('assets/img/gerakan-bangkit-belajar.jpg')}}" data-gall="portfolioGallery" class="venobox">
+            <img src="{{ asset('assets/img/gerakan-bangkit-belajar.jpg')}}" alt="">
           </a>
         </div>
       </div>
@@ -43,8 +43,8 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="gallery-item wow fadeInUp">
-          <a href="{{asset('assets/img/gbb.jpg')}}" data-gall="portfolioGallery" class="venobox">
-            <img src="{{asset('assets/img/gbb.jpg')}}" alt="">
+          <a href="{{asset('assets/img/program-gbb.jpg')}}" data-gall="portfolioGallery" class="venobox">
+            <img src="{{asset('assets/img/program-gbb.jpg')}}" alt="">
           </a>
         </div>
       </div>

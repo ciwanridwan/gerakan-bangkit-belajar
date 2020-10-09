@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Jenjang;
 use App\Province;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AnggotaDewanController extends Controller
 {
@@ -19,7 +21,7 @@ class AnggotaDewanController extends Controller
      */
     public function index()
     {
-        $anggotaDewan = Anggota::paginate(10);
+        $anggotaDewan = Anggota::orderBy('created_at', 'desc')->paginate(15);
         // $jenjang = Jenjang::where('id', $anggotaDewan->jenjang_id)->get();
         // dd($anggotaDewan);
         $jenjang = Jenjang::all();
@@ -56,14 +58,26 @@ class AnggotaDewanController extends Controller
                 'dapil' => 'nullable',
                 'province_id' => 'nullable|required_if:jenjang_id,2',
                 'city_id' => 'nullable|required_if:jenjang_id,3',
+                'foto' => 'required|image|mimes:jpg,jpeg,png'
             ]
         );
+
+        if ($request->hasFile('foto')) {
+            $fileNameWithExtension = $request->file('foto')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('foto')->storeAs('public/photos', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $anggota = new Anggota();
         $anggota->nama = $request->input('nama');
         $anggota->jenjang_id = $request->input('jenjang_id');
         $anggota->province_id = $request->input('province_id');
         $anggota->city_id = $request->input('city_id');
+        $anggota->foto = $fileNameToStore;
         if ($request->jenjang_id == 1) {
             $anggota->dapil = 0;
             $anggota->save();
@@ -129,6 +143,7 @@ class AnggotaDewanController extends Controller
                 'dapil' => 'nullable',
                 'province_id' => 'nullable|required_if:jenjang_id,2',
                 'city_id' => 'nullable|required_if:jenjang_id,3',
+                'foto' => 'image|mimes:jpg,jpeg,png'
             ]
         );
         $anggota = Anggota::find($id);
@@ -152,6 +167,21 @@ class AnggotaDewanController extends Controller
             $anggota->update();
         }
         
+        if ($request->hasFile('foto')) {
+            $fileNameWithExtension = $request->file('foto')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('foto')->storeAs('public/photos', $fileNameToStore);
+            $anggota->foto = $fileNameToStore;
+            
+            $select_old_foto_name = DB::table('anggotas')->where('id', $request->id)->first();
+            
+            if ($select_old_foto_name != 'noimage.jpg') {
+                Storage::delete('public/photos', $select_old_foto_name->foto);
+            }
+        }
+
         $anggota->update();
         $jenjang = Jenjang::find($request->jenjang_id);
         $anggota->jenjangs()->attach($jenjang);

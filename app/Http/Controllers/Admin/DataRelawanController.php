@@ -11,6 +11,7 @@ use App\Province;
 use App\Relawan;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class DataRelawanController extends Controller
@@ -22,7 +23,7 @@ class DataRelawanController extends Controller
      */
     public function indexJenjang()
     {
-        $jenjang = Jenjang::all();
+        $jenjang = Jenjang::orderBy('created_at', 'desc')->get();
         return view('admins.jenjang.index')->with('jenjang', $jenjang);
     }
 
@@ -76,7 +77,7 @@ class DataRelawanController extends Controller
 
     public function indexAccount()
     {
-        $user = User::all();
+        $user = User::orderBy('created_at', 'desc')->paginate(15);
         return view('admins.account.index')->with('user', $user);
     }
 
@@ -136,7 +137,7 @@ class DataRelawanController extends Controller
         $akun = new User();
         $akun->name = $request->input('name');
         $akun->email = $request->input('email');
-        $akun->password = $request->input('password');
+        $akun->password = Hash::make('password');
         $akun->save();
 
         Session::put('success', 'Data Berhasil Ditambah');
@@ -145,7 +146,7 @@ class DataRelawanController extends Controller
 
     public function index()
     {
-        $relawan = Relawan::all();
+        $relawan = Relawan::orderBy('created_at', 'desc')->paginate(15);
         $anggota = Anggota::all();
         $jenjang = Jenjang::all();
         $provinces = Province::all();
