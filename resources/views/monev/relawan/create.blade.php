@@ -66,7 +66,7 @@
             <div class="form-group">
               <label for="village_id">Kelurahan / Desa</label>
               <select class="form-control" id="village_id" name="village_id">
-                <option value="">Pilih Kecamatan</option>
+                <option value="">Pilih Kelurahan/Desa</option>
               </select>
                 <p class="text-danger">{{ $errors->first('village_id') }}</p>
             </div>

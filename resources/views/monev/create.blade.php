@@ -34,6 +34,44 @@ Monev
                         </div>
 
                         <div class="form-group">
+                            <label for="jenjang_id">Jenjang Relawan</label>
+                            <select class="form-control" id="jenjang_id" name="" required>
+                                <option value="">Pilih Jenjang</option>
+                                @foreach ($jenjang as $item)
+                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-danger">{{ $errors->first('jenjang_id') }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="province_id">Provinsi</label>
+                            <select class="form-control" id="province_id" name="province_id">
+                              <option value="">Pilih Provinsi</option>
+                              @foreach ($provinces as $item)
+                              <option value="{{$item->id}}">{{$item->name}}</option>
+                              @endforeach
+                            </select>
+                            <p class="text-danger">{{ $errors->first('province_id') }}</p>
+                          </div>     
+                          
+                          <div class="form-group">
+                            <label for="exampleFormControlSelect2">Kota</label>
+                            <select class="form-control" id="city_id" name="city_id">
+                              <option value="">Pilih Kabupaten/Kota</option>
+                            </select>
+                            <p class="text-danger">{{ $errors->first('city_id') }}</p>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="district_id">Kecamatan</label>
+                            <select class="form-control" id="district_id" name="district_id">
+                              <option value="">Pilih Kecamatan</option>
+                            </select>
+                            <p class="text-danger">{{ $errors->first('district_id') }}</p>
+                          </div>
+
+                        <div class="form-group">
                             <label for="anggota_id">Anggota Dewan</label>
                             <select class="form-control" id="anggota_id" name="anggota_id">
                                 <option value="">Pilih Anggota</option>
@@ -42,21 +80,6 @@ Monev
                                 @endforeach
                             </select>
                             <p class="text-danger">{{ $errors->first('anggota_id') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="relawan_id">Relawan</label>
-                            <select class="form-control" id="relawan_id" name="relawan_id">
-                                <option value="">Pilih Relawan</option>
-                                @foreach ($relawan as $item)
-                                @foreach ($anggota as $p)
-                                @if ($item->anggota_id == $p->id)
-                                <option value="{{$item->id}}">{{$p->nama}}</option>
-                                @endif
-                                @endforeach
-                                @endforeach
-                            </select>
-                            <p class="text-danger">{{ $errors->first('relawan_id') }}</p>
                         </div>
 
                         <div class="form-group">
@@ -157,8 +180,8 @@ Monev
 
                         <div class="form-group">
                             <label for="berkas">File</label>
-                            <input type="file" class="form-control form-control-lg" id="berkas"
-                                placeholder="" name="berkas" required>
+                            <input type="file" class="form-control form-control-lg" id="berkas" placeholder=""
+                                name="berkas" required>
                             <p class="text-danger">{{ $errors->first('berkas') }}</p>
                         </div>
 

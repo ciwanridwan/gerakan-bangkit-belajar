@@ -6,41 +6,28 @@
     <title>Laporan Data Sanggar Oleh Team</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/style-pdf.css')}}" type="text/css"> --}}
     <style type="text/css">
         .normal {
             font-style: normal;
             font-weight: normal;
         }
     </style>
-    <style>
-        .logo-cetak {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="logo-cetak">
-        <img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar"
-            style="width: 50px; height: auto">
-        <center>
-            <h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR</h4>
-            <h6>Tanggal {{$day}}-{{ $bulan }}-{{ $tahun }}
-        </center>
-        </h6>
-    </div>
+    <center>
+        {{-- <img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" class="logo-cetak"> --}}
+        <h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR</h4>
+        <h6>Tanggal {{$day}}-{{ $bulan }}-{{ $tahun }}
+    </center>
+    </h6>
     <hr />
     <table width="100%" border="0">
         <tr>
             <td width="30%">Jenjang</td>
             <td width="2%">:</td>
             <td width="68%"><?= $laporan->nama_jenjang; ?></td>
-            @foreach ($anggota as $item)
-            <td><img src="{{asset('storage/photos/'. $item->foto )}}" alt=""
-                    style="height: auto; width: 100px; border-radius: 50%"></td>
-            @endforeach
         </tr>
         <tr>
             <td>Nama DPR</td>

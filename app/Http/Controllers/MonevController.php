@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Anggota;
+use App\Jenjang;
 use App\Monev;
+use App\Province;
 use App\Relawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -29,7 +31,9 @@ class MonevController extends Controller
     {
         $anggota = Anggota::all();
         $relawan = Relawan::all();
-        return view('monev.create')->with("anggota", $anggota)->with('relawan', $relawan);
+        $jenjang = Jenjang::all();
+        $provinces = Province::all();
+        return view('monev.create')->with("anggota", $anggota)->with('relawan', $relawan)->with('jenjang', $jenjang)->with('provinces', $provinces);
     }
 
     /**
@@ -44,7 +48,7 @@ class MonevController extends Controller
         [
             'user_id' => 'required|exists:users,id',
             'anggota_id' => 'required|exists:anggotas,id',
-            'relawan_id' => 'required|exists:relawans,id',
+            'relawan_id' => 'required',
             'foto_gadget' => 'required|image|mimes:jpg,jpeg,png',
             'foto_komputer' => 'required|image|mimes:jpg,jpeg,png',
             'foto_wifi' => 'required|image|mimes:jpg,jpeg,png',

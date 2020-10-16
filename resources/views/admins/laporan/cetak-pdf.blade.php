@@ -10,19 +10,12 @@
             font-weight: normal;
         }
     </style>
-    <style>
-        .logo-cetak {
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-        }
-    </style>
 </head>
 <body>
 
 
 <div class="logo-cetak">
-    <img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 50px; height: auto">
+    {{-- <img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 100px; height: auto;"> --}}
     <center>
         <h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR<br />SE - INDONESIA</h4>
         <h6>Tanggal {{ $day }}-{{ $bulan }}-{{ $tahun }}

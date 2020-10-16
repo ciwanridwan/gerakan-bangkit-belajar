@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
 @section('title')
-Fasilitas
+Laporan Team
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@ Fasilitas
             <div class="card">
 				<?php if(!empty($laporan)){ ?>
                 <div class="card-body">
-					<img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 100px; height: auto;">
+					<img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 75px;">
                     <center><h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR</h4>
 					<h6>Tanggal {{$day}}-{{ $bulan }}-{{ $tahun }}</center></h6><hr />
                     <table width="100%" border="0">

@@ -1,0 +1,22 @@
+.normal {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.logo-cetak {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: left;
+    width: 75px;
+}
+
+.up-logo {
+    width: 50px; 
+    height: auto
+}
+
+.gambar {
+    height: 100px; 
+    width: 100px; 
+    border-radius: 50%;
+}

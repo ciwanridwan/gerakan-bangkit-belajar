@@ -20,6 +20,8 @@ class CreateBeritasTable extends Migration
             $table->string('gambar');
             $table->longText('isi');
             $table->string('penulis');
+            $table->longText('deskripsi1');
+            $table->longText('deskripsi2');
             $table->foreignId('user_id');
             $table->integer('status');
             $table->timestamps();

@@ -1,23 +1,8 @@
 @extends('layouts.user')
 
 @section('title')
-Fasilitas
+Laporan Team
 @endsection
-
-{{-- @section('style-button-upload')
-<style>
-input[type="file"] {
-    display: none;
-}
-
-.custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-}
-</style> --}}
-{{-- @endsection --}}
 
 @section('content')
 <div class="content-wrapper">

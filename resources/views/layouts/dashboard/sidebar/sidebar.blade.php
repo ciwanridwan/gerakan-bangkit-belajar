@@ -32,9 +32,6 @@
               <a class="nav-link" href="{{ route('create-relawan')}}">Relawan</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('create-sanggar-user')}}">Sanggar</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="{{ route('create-monev')}}">Monev</a>
             </li>
           </ul>

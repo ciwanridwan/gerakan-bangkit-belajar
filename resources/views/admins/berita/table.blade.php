@@ -62,6 +62,13 @@ Berita
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
+                                @if ($item->status == 1)
+                                <td><form action="{{route('unpublish', $item->id)}}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="btn btn-warning">Unpublish</button>
+                                </form></td>
+                                @endif
                             </tr>
                             @php
                             $nomor = $nomor + 1;

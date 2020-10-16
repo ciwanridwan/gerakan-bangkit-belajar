@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
+    public function unPublish($id)
+    {
+        $unPublish = Berita::find($id);
+        $unPublish->status = 0;
+        $unPublish->update();
+
+        Session::put('message',  $unPublish->judul . ' Berhasil Di UnPublish');
+        return redirect()->back();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -74,6 +83,8 @@ class BeritaController extends Controller
         $berita->seo_judul = $request->input('seo_judul');
         $berita->isi = $request->input('isi');
         $berita->penulis = $request->input('penulis');
+        $berita->deskripsi1 = $request->input('deskripsi1');
+        $berita->deskripsi2 = $request->input('deskripsi2');
         $berita->gambar = $fileNameToStore;
         $berita->user_id = $request->input('user_id');
         $berita->status = 0;
@@ -121,6 +132,8 @@ class BeritaController extends Controller
         $update->judul = $request->input('judul');
         $update->seo_judul = $request->input('seo_judul');
         $update->isi = $request->input('isi');
+        $update->deskripsi1 = $request->input('deskripsi1');
+        $update->deskripsi2 = $request->input('deskripsi2');
         $update->penulis = $request->input('penulis');
         $update->user_id = $request->input('user_id');
         $update->status = 0;

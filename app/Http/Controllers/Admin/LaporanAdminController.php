@@ -71,7 +71,7 @@ class LaporanAdminController extends Controller
 		$jumlah_link_youtube = DB::table('monevs')->sum('jumlah_link_youtube');
 		$provinsi = DB::table('provinces')->get();
 		$pdf = PDF::loadview('admins.laporan.cetak-pdf', ['anggota_dprri' => $anggota_dprri, 'anggota_dprprov' => $anggota_dprprov, 'anggota_dprkab' => $anggota_dprkab, 'sanggar_dprri' => $sanggar_dprri, 'sanggar_dprprov' => $sanggar_dprprov, 'sanggar_dprkab' => $sanggar_dprkab, 'zona_merah' => $zona_merah, 'zona_kuning' => $zona_kuning, 'zona_hijau' => $zona_hijau, 'jumlah_paud' => $jumlah_paud, 'jumlah_sd' => $jumlah_sd, 'jumlah_smp' => $jumlah_smp, 'jumlah_sma' => $jumlah_sma, 'jumlah_komputer' => $jumlah_komputer, 'jumlah_gadget' => $jumlah_gadget, 'jumlah_wifi' => $jumlah_wifi, 'jumlah_berita' => $jumlah_berita, 'jumlah_link_youtube' => $jumlah_link_youtube, 'provinsi' => $provinsi, 'bulan' => $bulan, 'tahun' => $tahun, 'bulanTahun' => $bulanTahun, 'day' => $day]);
-    	return $pdf->stream('laporan-admin.pdf');
+    	return $pdf->download('laporan-admin.pdf');
     }
     /**
      * Display a listing of the resource.

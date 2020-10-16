@@ -51,6 +51,18 @@ Berita
                         </div>
 
                         <div class="form-group">
+                            <label for="deskripsi1">Isi Tambahan</label>
+                            <textarea class="form-control" id="deskripsi1" name="deskripsi1" id="" cols="30" rows="10"></textarea>
+                            <p class="text-danger">{{ $errors->first('deskripsi1') }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deskripsi2">Isi Tambahan</label>
+                            <textarea class="form-control" id="deskripsi2" name="deskripsi2" id="" cols="30" rows="10"></textarea>
+                            <p class="text-danger">{{ $errors->first('deskripsi2') }}</p>
+                        </div>
+
+                        <div class="form-group">
                             <label for="penulis">Penulis</label>
                             <input type="text" class="form-control" id="penulis" placeholder="penulis" name="penulis"
                                 required>

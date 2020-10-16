@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
+    public function unPublish($id)
+    {
+        $unPublish = Berita::find($id);
+        $unPublish->status = 0;
+        $unPublish->update();
+
+        Session::put('message',  $unPublish->judul . ' Berhasil Di UnPublish');
+        return redirect()->back();
+    }
     /**
      * Display a listing of the resource.
      *

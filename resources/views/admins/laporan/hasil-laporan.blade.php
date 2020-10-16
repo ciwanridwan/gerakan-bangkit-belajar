@@ -10,7 +10,7 @@ Data Anggota Dewan
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-					<img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 100px; height: auto;">
+					{{-- <img src="{{ asset('assets/img/logo-gbb.jpeg')}}" alt="gerakan-bangkit-belajar" style="width: 75px; height: auto;"> --}}
                     <center><h4 class="card-title">LAPORAN DATA SANGGAR<br />GERAKAN BANGKIT BELAJAR<br />SE - INDONESIA</h4>
 					<h6>Tanggal {{$day}}-{{ $bulan }}-{{ $tahun }}</center></h6><hr />
                     <table width="100%" border="0">
