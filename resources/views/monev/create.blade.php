@@ -3,6 +3,19 @@
 Monev
 @endsection
 
+@section('css-hide')
+<style>
+    #hidden_div {
+        display: none;
+    }
+
+    #hiddenn {
+        display: none;
+    }
+</style>
+
+@endsection
+
 @section('content')
 <div class="content-wrapper">
     <div class="row">
@@ -35,41 +48,42 @@ Monev
 
                         <div class="form-group">
                             <label for="jenjang_id">Jenjang Relawan</label>
-                            <select class="form-control" id="jenjang_id" name="" required>
+                            <select class="form-control" id="jenjang_id" name="" required onchange="showDiv('hidden_div', this)" onkeypress="javascript:showDivTwo('hiddenn');">
                                 <option value="">Pilih Jenjang</option>
                                 @foreach ($jenjang as $item)
                                 <option value="{{$item->id}}">{{$item->nama}}</option>
                                 @endforeach
                             </select>
+                            {{-- <div id="hidden_div">This is a hidden div</div> --}}
                             <p class="text-danger">{{ $errors->first('jenjang_id') }}</p>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="hidden_div">
                             <label for="province_id">Provinsi</label>
                             <select class="form-control" id="province_id" name="province_id">
-                              <option value="">Pilih Provinsi</option>
-                              @foreach ($provinces as $item)
-                              <option value="{{$item->id}}">{{$item->name}}</option>
-                              @endforeach
+                                <option value="">Pilih Provinsi</option>
+                                @foreach ($provinces as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
                             </select>
                             <p class="text-danger">{{ $errors->first('province_id') }}</p>
-                          </div>     
-                          
-                          <div class="form-group">
-                            <label for="exampleFormControlSelect2">Kota</label>
+                        </div>
+
+                        <div class="form-group" id="hiddenn">
+                            <label for="city_id">Kota</label>
                             <select class="form-control" id="city_id" name="city_id">
-                              <option value="">Pilih Kabupaten/Kota</option>
+                                <option value="">Pilih Kabupaten/Kota</option>
                             </select>
                             <p class="text-danger">{{ $errors->first('city_id') }}</p>
-                          </div>
+                        </div>
 
-                          <div class="form-group">
+                        <div class="form-group" id="hiddenn">
                             <label for="district_id">Kecamatan</label>
                             <select class="form-control" id="district_id" name="district_id">
-                              <option value="">Pilih Kecamatan</option>
+                                <option value="">Pilih Kecamatan</option>
                             </select>
                             <p class="text-danger">{{ $errors->first('district_id') }}</p>
-                          </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="anggota_id">Anggota Dewan</label>
@@ -227,5 +241,18 @@ Monev
                 }
             });
         })
+</script>
+<script>
+    function showDiv(divId, element)
+{
+        document.getElementById(divId).style.display = element.value == 2 ? 'block' : 'none';
+
+        function showDivTwo(divId, elements){
+            document.getElementById(divId).style.display = element.value == 3 ? 'block' : 'none';
+        }
+}
+
+
+
 </script>
 @endsection

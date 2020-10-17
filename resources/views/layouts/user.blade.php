@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('src/assets/css/demo_1/style.css')}}">
     <!-- End Layout styles -->
     <link rel="shortcut icon" href="{{ asset('src/assets/images/logo111.ico')}}" />
+    @yield('css-hide')
     {{-- @yield('style-button-upload') --}}
   </head>
   <body>

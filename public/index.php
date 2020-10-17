@@ -1,5 +1,5 @@
 <?php
-
+// header('location: xampp/htdocs/GerakanBb/public/');
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
