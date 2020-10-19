@@ -48,7 +48,7 @@ class MonevController extends Controller
         [
             'user_id' => 'required|exists:users,id',
             'anggota_id' => 'required|exists:anggotas,id',
-            'relawan_id' => 'required',
+            'relawan_id' => 'exists:anggotas,id',
             'foto_gadget' => 'required|image|mimes:jpg,jpeg,png',
             'foto_komputer' => 'required|image|mimes:jpg,jpeg,png',
             'foto_wifi' => 'required|image|mimes:jpg,jpeg,png',
@@ -62,7 +62,7 @@ class MonevController extends Controller
             'jumlah_wifi' => 'required',
             'jumlah_berita' => 'required',
             'jumlah_link_youtube' => 'required',
-            'berkas' => 'nullable|mimes:pdf,doc,docx',
+            'berkas' => 'nullable|mimes:pdf,doc,docx,pptx,xls,xlsx,ppt',
         ]);
 
         if ($request->hasFile('foto_gadget')) {
@@ -108,7 +108,7 @@ class MonevController extends Controller
         $monev = new Monev();
         $monev->user_id = $request->input('user_id');
         $monev->anggota_id = $request->input('anggota_id');
-        $monev->relawan_id = $request->input('relawan_id');
+        $monev->relawan_id = $monev->anggota_id;
         $monev->foto_gadget = $gadget;
         $monev->foto_komputer = $komputer;
         $monev->foto_wifi = $wifi;

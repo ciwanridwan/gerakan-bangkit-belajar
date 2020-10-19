@@ -3,6 +3,7 @@
   <div class="container">
 
     <div id="logo" class="pull-left">
+      <img src="{{asset('assets/img/logo111.png')}}" alt="" width="50px" height="50px" style="border-radius: 50%">
       <h1><a href="{{url('/')}}" class="scrollto">GBB</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a> -->

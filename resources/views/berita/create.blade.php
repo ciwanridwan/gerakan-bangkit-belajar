@@ -72,7 +72,7 @@ Berita
                         <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                     </form>
-                    <button class="btn btn-light" onclick="goBack()">Cancel</button>
+                    {{-- <button class="btn btn-light" onclick="goBack()">Cancel</button> --}}
                 </div>
             </div>
         </div>

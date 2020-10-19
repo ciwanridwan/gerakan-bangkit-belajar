@@ -240,10 +240,6 @@ Monev
         })
 </script>
 <script>
-    // function showDiv(divId, element)
-    // {
-    //     document.getElementById(divId).style.display = element.value == 2 ? 'block' : 'none';
-    // }
 var province = document.getElementById('province');
 province.style.display = 'none'; 
 
@@ -270,8 +266,6 @@ function showDiv() {
         $("#city").show();
         $("#district").show();
     }
-
 }
-
 </script>
 @endsection
