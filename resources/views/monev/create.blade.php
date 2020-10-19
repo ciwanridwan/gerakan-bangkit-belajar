@@ -8,10 +8,6 @@ Monev
     #hidden_div {
         display: none;
     }
-
-    #hiddenn {
-        display: none;
-    }
 </style>
 
 @endsection
@@ -48,7 +44,8 @@ Monev
 
                         <div class="form-group">
                             <label for="jenjang_id">Jenjang Relawan</label>
-                            <select class="form-control" id="jenjang_id" name="" required onchange="showDiv('hidden_div', this)" onkeypress="javascript:showDivTwo('hiddenn');">
+                            {{-- <select class="form-control" id="jenjang_id" name="jenjang_id" required onchange="showDiv('hidden_div', this)"> --}}
+                                <select name="jenjang_id" id="jenjang_id" class="form-control" required onchange="showDiv()">
                                 <option value="">Pilih Jenjang</option>
                                 @foreach ($jenjang as $item)
                                 <option value="{{$item->id}}">{{$item->nama}}</option>
@@ -58,7 +55,7 @@ Monev
                             <p class="text-danger">{{ $errors->first('jenjang_id') }}</p>
                         </div>
 
-                        <div class="form-group" id="hidden_div">
+                        <div class="form-group" id="province">
                             <label for="province_id">Provinsi</label>
                             <select class="form-control" id="province_id" name="province_id">
                                 <option value="">Pilih Provinsi</option>
@@ -69,7 +66,7 @@ Monev
                             <p class="text-danger">{{ $errors->first('province_id') }}</p>
                         </div>
 
-                        <div class="form-group" id="hiddenn">
+                        <div class="form-group" id="city">
                             <label for="city_id">Kota</label>
                             <select class="form-control" id="city_id" name="city_id">
                                 <option value="">Pilih Kabupaten/Kota</option>
@@ -77,7 +74,7 @@ Monev
                             <p class="text-danger">{{ $errors->first('city_id') }}</p>
                         </div>
 
-                        <div class="form-group" id="hiddenn">
+                        <div class="form-group" id="district">
                             <label for="district_id">Kecamatan</label>
                             <select class="form-control" id="district_id" name="district_id">
                                 <option value="">Pilih Kecamatan</option>
@@ -243,16 +240,38 @@ Monev
         })
 </script>
 <script>
-    function showDiv(divId, element)
-{
-        document.getElementById(divId).style.display = element.value == 2 ? 'block' : 'none';
+    // function showDiv(divId, element)
+    // {
+    //     document.getElementById(divId).style.display = element.value == 2 ? 'block' : 'none';
+    // }
+var province = document.getElementById('province');
+province.style.display = 'none'; 
 
-        function showDivTwo(divId, elements){
-            document.getElementById(divId).style.display = element.value == 3 ? 'block' : 'none';
-        }
+var city = document.getElementById('city');
+city.style.display = 'none';
+
+var district = document.getElementById('district');
+district.style.display = 'none';
+
+function showDiv() {
+    selectedVal = document.getElementById('jenjang_id').value;
+    if (selectedVal == '1') {
+        $("#province").hide();
+        $("#city").hide();
+        $("#district").hide();
+    }
+
+    if (selectedVal == '2') {
+        $("#province").show();
+    }
+
+    if (selectedVal == '3') {
+        $("#province").show();
+        $("#city").show();
+        $("#district").show();
+    }
+
 }
-
-
 
 </script>
 @endsection

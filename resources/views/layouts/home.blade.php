@@ -26,7 +26,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
-
+    @yield('css-paragraf')
     <!-- =======================================================
   * Template Name: Avilon - v2.1.0
   * Template URL: https://bootstrapmade.com/avilon-bootstrap-landing-page-template/

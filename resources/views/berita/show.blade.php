@@ -1,5 +1,13 @@
 @extends('layouts.home', ['title' => 'Portal Berita', 'activePage' => 'berita'])
 
+@section('css-paragraf')
+<style>
+  .paragraf {
+    word-spacing: normal;
+  }
+</style>
+@endsection
+
 @section('content')
 <section id="advanced-features">
 
@@ -12,7 +20,7 @@
           <div class="wow fadeInLeft">
             <h2>{{$berita->judul}}</h2>
             {{-- <h3></h3> --}}
-            <p>{{$berita->isi}}</p>
+            <p class="paragraf">{{$berita->isi}}</p>
 
           </div>
         </div>
@@ -32,23 +40,23 @@
         </div>
       </div>
     </div>
-  </div>    
+  </div>
   @endif
-  
-@if ($berita->deskripsi2 != null)
-<div class="features-row section-bg">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <img class="advanced-feature-img-right wow fadeInRight" src="" alt="">
-        <div class="wow fadeInLeft">
-          <p>{{$berita->deskripisi2}}</p>
+
+  @if ($berita->deskripsi2 != null)
+  <div class="features-row section-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <img class="advanced-feature-img-right wow fadeInRight" src="" alt="">
+          <div class="wow fadeInLeft">
+            <p>{{$berita->deskripisi2}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-@endif
+  @endif
 </section><!-- End Advanced Featuress Section -->
 
 @endsection
