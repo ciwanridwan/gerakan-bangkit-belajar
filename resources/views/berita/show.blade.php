@@ -20,7 +20,7 @@
           <div class="wow fadeInLeft">
             <h2>{{$berita->judul}}</h2>
             {{-- <h3></h3> --}}
-            <p class="paragraf">{{$berita->isi}}</p>
+            {!! $berita->isi !!}
 
           </div>
         </div>

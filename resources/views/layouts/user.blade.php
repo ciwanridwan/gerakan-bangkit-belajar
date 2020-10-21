@@ -61,5 +61,6 @@
     <script src="{{ asset('src/assets/js/demo_1/dashboard.js')}}"></script>
     <!-- End custom js for this page-->
     @yield('js')
+    @yield('js-deskripsi')
   </body>
 </html>

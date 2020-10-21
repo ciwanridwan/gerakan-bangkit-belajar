@@ -21,7 +21,7 @@
 
             <div class="col-lg-6 content wow fadeInRight">
                 <h2>{{$item->judul}}</h2>
-                <p>{{ \Illuminate\Support\Str::limit($item->isi, 500, '...') }}</p>
+                <p>{!! \Illuminate\Support\Str::limit($item->isi, 500, '...') !!}</p>
                 <a href="{{route('show-berita', $item->seo_judul)}}" class="get-started-btn"> Lihat Selebihnya</a>
             </div>
         </div>

@@ -46,20 +46,8 @@ Berita
 
                         <div class="form-group">
                             <label for="isi">Isi</label>
-                            <textarea class="form-control" id="isi" name="isi" id="" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" id="description" name="isi" id="" cols="30" rows="10"></textarea>
                             <p class="text-danger">{{ $errors->first('isi') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deskripsi1">Isi Tambahan</label>
-                            <textarea class="form-control" id="deskripsi1" name="deskripsi1" id="" cols="30" rows="10"></textarea>
-                            <p class="text-danger">{{ $errors->first('deskripsi1') }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deskripsi2">Isi Tambahan</label>
-                            <textarea class="form-control" id="deskripsi2" name="deskripsi2" id="" cols="30" rows="10"></textarea>
-                            <p class="text-danger">{{ $errors->first('deskripsi2') }}</p>
                         </div>
 
                         <div class="form-group">
@@ -113,4 +101,11 @@ Berita
             });
         })
 </script>
+@endsection
+
+@section('js-deskripsi')
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('description');
+    </script>
 @endsection

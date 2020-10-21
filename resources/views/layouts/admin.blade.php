@@ -66,5 +66,6 @@
         window.history.back()
       }
     </script>
+    @yield('js-deskripsi')
   </body>
 </html>
