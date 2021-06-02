@@ -58,8 +58,7 @@ class RegisterController extends Controller
                 'email' => 'required|email|unique:admins',
                 'password' => 'required|string|min:8|confirmed',
             ], 
-            $customErrorMessage,
-        );
+            $customErrorMessage);
 
         if (!auth()->guard('admin')->check()) {
             $admin = Admin::create([

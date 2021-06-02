@@ -25,13 +25,13 @@
                 <a href="{{route('show-berita', $item->seo_judul)}}" class="get-started-btn"> Lihat Selebihnya</a>
             </div>
         </div>
-
-        @else 
-        <p class="section-description" style="text-align: center">
-            Mohon maaf, untuk saat ini belum ada berita yang di publish<br>
-        </p>
         @endif
         @endforeach
+        @if ($item->status == 0)
+        <h3 class="section-description" style="text-align: center">
+            Mohon maaf, untuk saat ini belum ada berita yang di publish<br>
+        </h3>
+        @endif
     </div>
 </section><!-- End About Section -->
 @endsection

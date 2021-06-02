@@ -104,15 +104,14 @@
                                 <div class="form-group d-flex justify-content-center">
                                     <div class="form-check form-check-flat mt-0">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" required> I agree to the
-                                            terms </label>
+                                            <input type="checkbox" class="form-check-input" required> Saya Setuju </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary submit-btn btn-block">Register</button>
                                 </div>
                                 <div class="text-block text-center my-3">
-                                    <span class="text-small font-weight-semibold">Already have and account ?</span>
+                                    <span class="text-small font-weight-semibold">Sudah Punya Akun ?</span>
                                     <a href="{{ route('login-admin')}}" class="text-black text-small">Login</a>
                                 </div>
                             </form>

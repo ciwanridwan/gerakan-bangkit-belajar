@@ -83,7 +83,7 @@ class BeritaController extends Controller
             $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
             $extension = $request->file('gambar')->getClientOriginalExtension();
             $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
-            $path = $request->file('gambar')->storeAs('public/gambars', $fileNameToStore);
+            $path = $request->file('gambar')->storeAs('app/public/gambars', $fileNameToStore);
         } else {
             $fileNameToStore = 'noimage.jpg';
         }
